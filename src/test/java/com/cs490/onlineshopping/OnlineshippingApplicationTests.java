@@ -1,4 +1,4 @@
-package com.cs490.onlineshipping;
+package com.cs490.onlineshopping;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

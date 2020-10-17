@@ -1,14 +1,14 @@
-package com.cs490.onlineshipping;
+package com.cs490.onlineshopping;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OnlineshippingApplication {
+public class OnlineshoppingApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OnlineshippingApplication.class, args);
-        System.out.println("good code");
+        SpringApplication.run(OnlineshoppingApplication.class, args);
+        System.out.println("good code test");
 
     }
 
