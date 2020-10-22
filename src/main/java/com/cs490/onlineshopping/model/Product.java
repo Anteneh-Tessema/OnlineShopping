@@ -10,6 +10,7 @@ public class Product {
     private String description;
 //    vendorId	Long todo should be reference to user object
 //    category todo should be table or enum
+
     private Double price;
     private Integer countInStock;
 
