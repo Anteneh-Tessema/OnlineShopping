@@ -2,13 +2,13 @@ package com.cs490.onlineshopping.payments.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class PaymentLog {
+    @Id
+    @GeneratedValue
     private Long id;
 
     @ManyToOne()

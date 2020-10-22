@@ -1,7 +1,6 @@
 package com.cs490.onlineshopping.admin.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Product {
@@ -11,7 +10,8 @@ public class Product {
     private String name;
     private String image;
     private String description;
-    @OneToOne(cascade= {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "vendor_id", nullable = false)
     private Vendor vendor;
 //    category todo should be table or enum
 
@@ -60,13 +60,5 @@ public class Product {
 
     public void setCountInStock(Integer countInStock) {
         this.countInStock = countInStock;
-    }
-
-    public Vendor getVendor() {
-        return vendor;
-    }
-
-    public void setVendor(Vendor vendor) {
-        this.vendor = vendor;
     }
 }
