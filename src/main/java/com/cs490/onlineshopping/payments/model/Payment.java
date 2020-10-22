@@ -1,4 +1,4 @@
-package com.cs490.onlineshopping.entities.payments;
+package com.cs490.onlineshopping.payments.model;
 
 import javax.persistence.*;
 import java.util.Date;
