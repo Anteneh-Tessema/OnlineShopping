@@ -1,6 +1,7 @@
 package com.cs490.onlineshopping.admin.service;
 
 import com.cs490.onlineshopping.admin.model.Product;
+import com.cs490.onlineshopping.admin.model.Vendor;
 import com.cs490.onlineshopping.admin.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,9 @@ public class ProductService {
 
     public void saveProduct(Product product) throws Exception {
         productRepository.save(product);
+    }
+
+    public List<Product> findByVendor(Vendor vendor){
+        return productRepository.findByVendor(vendor);
     }
 }

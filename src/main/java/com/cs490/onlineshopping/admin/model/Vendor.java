@@ -1,6 +1,7 @@
 package com.cs490.onlineshopping.admin.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Vendor {
@@ -16,6 +17,10 @@ public class Vendor {
 
     @OneToOne(cascade= {CascadeType.ALL})
     private Address address;
+
+    @OneToMany(mappedBy = "vendor", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Product> listProducts;
 
     private Boolean registrationFeeStatus;
 
@@ -93,5 +98,11 @@ public class Vendor {
                 + registrationFeeStatus + ", role=" + role + "]";
     }
 
+    public List<Product> getListProducts() {
+        return listProducts;
+    }
 
+    public void setListProducts(List<Product> listProducts) {
+        this.listProducts = listProducts;
+    }
 }
