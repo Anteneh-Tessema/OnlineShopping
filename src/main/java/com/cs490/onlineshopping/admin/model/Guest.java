@@ -4,9 +4,7 @@ import javax.persistence.*;
 
 @Entity
 public class Guest extends User{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+
     @Enumerated(EnumType.STRING)
     private Role role=Role.GUEST;
 
@@ -24,10 +22,6 @@ public class Guest extends User{
         this.setUserName(userName);
         this.setPassword(password);
         this.address = address;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public Address getAddress() {
@@ -48,7 +42,7 @@ public class Guest extends User{
 
     @Override
     public String toString() {
-        return "EndUser [userId=" + id + ", firstName=" + getFirstName() + ", lastName=" + getLastName() + ", userName="
+        return "EndUser [userId=" + getId() + ", firstName=" + getFirstName() + ", lastName=" + getLastName() + ", userName="
                 + getUserName() + ", password=" + getPassword() + ", role=" + role + ", address=" + address + "]";
     }
 

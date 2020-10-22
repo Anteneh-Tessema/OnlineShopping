@@ -1,13 +1,21 @@
 package com.cs490.onlineshopping.admin.model;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String firstName;
     private String lastName;
     private String userName;
     private String password;
+
+    public int getId() {
+        return id;
+    }
 
     public String getFirstName() {
         return firstName;

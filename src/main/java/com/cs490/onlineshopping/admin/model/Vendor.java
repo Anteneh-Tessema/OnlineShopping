@@ -4,9 +4,7 @@ import javax.persistence.*;
 
 @Entity
 public class Vendor extends User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+
 
     @OneToOne(cascade= {CascadeType.ALL})
     private Address address;
@@ -18,10 +16,6 @@ public class Vendor extends User {
 
     public Vendor() {
         super();
-    }
-
-    public int getId() {
-        return id;
     }
 
     public Address getAddress() {
@@ -50,7 +44,7 @@ public class Vendor extends User {
 
     @Override
     public String toString() {
-        return "Vendor [vendorId=" + id + ", firstName=" + getFirstName() + ", lastName=" + getLastName() + ", userName="
+        return "Vendor [vendorId=" + getId() + ", firstName=" + getFirstName() + ", lastName=" + getLastName() + ", userName="
                 + getUserName() + ", password=" + getPassword() + ", address=" + address + ", registrationFeeStatus="
                 + registrationFeeStatus + ", role=" + role + "]";
     }
