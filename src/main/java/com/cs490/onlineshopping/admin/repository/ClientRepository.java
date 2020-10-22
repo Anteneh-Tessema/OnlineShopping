@@ -1,7 +1,9 @@
 package com.cs490.onlineshopping.admin.repository;
 
 import com.cs490.onlineshopping.admin.model.Client;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ClientRepository  extends JpaRepository<Client,Integer> {
+@Repository
+public interface ClientRepository  extends PagingAndSortingRepository<Client,Integer> {
 }
