@@ -1,14 +1,18 @@
-package com.cs490.onlineshopping.model;
+package com.cs490.onlineshopping.admin.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Product {
+    @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private String image;
     private String description;
-//    vendorId	Long todo should be reference to user object
+    @OneToOne(cascade= {CascadeType.ALL})
+    private Vendor vendor;
 //    category todo should be table or enum
 
     private Double price;
@@ -56,5 +60,13 @@ public class Product {
 
     public void setCountInStock(Integer countInStock) {
         this.countInStock = countInStock;
+    }
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
     }
 }

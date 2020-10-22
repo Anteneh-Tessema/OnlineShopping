@@ -3,60 +3,25 @@ package com.cs490.onlineshopping.admin.model;
 import javax.persistence.*;
 
 @Entity
-public class Vendor {
+public class Vendor extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int vendorId;
-
-    private String firstName;
-    private String lastName;
-    private String userName;
-    private String password;
+    private int id;
 
     @OneToOne(cascade= {CascadeType.ALL})
     private Address address;
 
     private boolean registrationFeeStatus;
+
+    @Enumerated(EnumType.STRING)
     private Role role=Role.VENDOR;
 
     public Vendor() {
         super();
     }
 
-    public int getVendorId() {
-        return vendorId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public int getId() {
+        return id;
     }
 
     public Address getAddress() {
@@ -85,8 +50,8 @@ public class Vendor {
 
     @Override
     public String toString() {
-        return "Vendor [vendorId=" + vendorId + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
-                + userName + ", password=" + password + ", address=" + address + ", registrationFeeStatus="
+        return "Vendor [vendorId=" + id + ", firstName=" + getFirstName() + ", lastName=" + getLastName() + ", userName="
+                + getUserName() + ", password=" + getPassword() + ", address=" + address + ", registrationFeeStatus="
                 + registrationFeeStatus + ", role=" + role + "]";
     }
 

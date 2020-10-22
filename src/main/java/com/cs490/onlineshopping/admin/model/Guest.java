@@ -3,15 +3,11 @@ package com.cs490.onlineshopping.admin.model;
 import javax.persistence.*;
 
 @Entity
-public class Guest {
+public class Guest extends User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
-
-    private String firstName;
-    private String lastName;
-    private String userName;
-    private String password;
+    private int id;
+    @Enumerated(EnumType.STRING)
     private Role role=Role.GUEST;
 
     @OneToOne(cascade= {CascadeType.ALL})
@@ -23,47 +19,15 @@ public class Guest {
 
     public Guest(String firstName, String lastName, String userName, String password, Address address) {
         super();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
-        this.password = password;
+        super.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setUserName(userName);
+        this.setPassword(password);
         this.address = address;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public int getId() {
+        return id;
     }
 
     public Address getAddress() {
@@ -84,8 +48,8 @@ public class Guest {
 
     @Override
     public String toString() {
-        return "EndUser [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
-                + userName + ", password=" + password + ", role=" + role + ", address=" + address + "]";
+        return "EndUser [userId=" + id + ", firstName=" + getFirstName() + ", lastName=" + getLastName() + ", userName="
+                + getUserName() + ", password=" + getPassword() + ", role=" + role + ", address=" + address + "]";
     }
 
 

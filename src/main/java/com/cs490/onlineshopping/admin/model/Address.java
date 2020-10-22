@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int addressId;
+    private int id;
 
     private String state;
     private String city;
@@ -33,14 +33,12 @@ public class Address {
         this.phoneNumber = phoneNumber;
     }
 
-
-
-    public int getAddressId() {
-        return addressId;
+    public int getId() {
+        return id;
     }
 
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getState() {
@@ -87,7 +85,7 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address [addressId=" + addressId + ", state=" + state + ", city=" + city + ", zipCode=" + zipCode
+        return "Address [addressId=" + id + ", state=" + state + ", city=" + city + ", zipCode=" + zipCode
                 + ", email=" + email + ", phoneNumber=" + phoneNumber + "]";
     }
 
