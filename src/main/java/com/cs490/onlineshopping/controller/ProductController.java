@@ -23,7 +23,7 @@ public class ProductController {
     @Autowired
     private VendorService vendorService;
 
-    @GetMapping("/{vendorid}")
+    @GetMapping("/getProducts/{vendorid}")
     public ResponseEntity<List<Product>> getAllProducts(@PathVariable("vendorid") int vendor_id){
         try{
 
