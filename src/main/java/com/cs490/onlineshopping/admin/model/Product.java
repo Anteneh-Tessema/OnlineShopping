@@ -11,7 +11,7 @@ public class Product {
     private String name;
     private String image;
     private String description;
-    @OneToOne(cascade= {CascadeType.ALL})
+    @OneToOne
     private Vendor vendor;
 //    category todo should be table or enum
 
