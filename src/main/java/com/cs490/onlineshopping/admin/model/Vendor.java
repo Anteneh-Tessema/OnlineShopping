@@ -4,16 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Vendor {
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String userName;
-    private String password;
+public class Vendor extends User{
 
     @OneToOne(cascade= {CascadeType.ALL})
     private Address address;
@@ -29,42 +20,6 @@ public class Vendor {
 
     public Vendor() {
         super();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Address getAddress() {
@@ -91,18 +46,17 @@ public class Vendor {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "Vendor [vendorId=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
-                + userName + ", password=" + password + ", address=" + address + ", registrationFeeStatus="
-                + registrationFeeStatus + ", role=" + role + "]";
-    }
-
     public List<Product> getListProducts() {
         return listProducts;
     }
 
     public void setListProducts(List<Product> listProducts) {
         this.listProducts = listProducts;
+    }
+
+    @Override
+    public String toString() {
+        return "Vendor [vendorId=" + super.toString() + ", address=" + address + ", registrationFeeStatus="
+                + registrationFeeStatus + ", role=" + role + "]";
     }
 }
