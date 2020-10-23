@@ -1,5 +1,6 @@
 package com.cs490.onlineshopping.security;
 
+import com.cs490.onlineshopping.admin.model.Role;
 import com.cs490.onlineshopping.admin.service.UserService;
 import com.cs490.onlineshopping.jwt.JwtConfig;
 import com.cs490.onlineshopping.jwt.JwtTokenVerifier;
@@ -50,7 +51,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig),JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-//                .antMatchers("/api/**").hasRole(STUDENT.name())
+                .antMatchers("/api/**").hasRole(Role.VENDOR.name())
                 .anyRequest()
                 .authenticated();
     }
