@@ -1,6 +1,7 @@
 package com.cs490.onlineshopping.payments.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -19,6 +20,9 @@ public class Payment {
     @Column(name = "transaction_time")
     @Temporal(TemporalType.TIME)
     private Date transactionTime;
+    private BigDecimal amount;
+    @Enumerated(EnumType.STRING)
+    private PaymentType paymentType;
 
     public Long getId() {
         return id;
@@ -66,5 +70,21 @@ public class Payment {
 
     public void setTransactionTime(Date transactionTime) {
         this.transactionTime = transactionTime;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
     }
 }
