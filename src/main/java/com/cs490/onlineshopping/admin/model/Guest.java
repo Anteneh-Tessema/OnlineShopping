@@ -15,11 +15,11 @@ public class Guest extends User{
         super();
     }
 
-    public Guest(String firstName, String lastName, String userName, String password, Address address) {
+    public Guest(String firstName, String lastName, String username, String password, Address address) {
         super();
         this.setFirstName(firstName);
         this.setLastName(lastName);
-        this.setUserName(userName);
+        this.setUsername(username);
         this.setPassword(password);
         this.address = address;
     }

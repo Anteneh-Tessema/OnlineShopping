@@ -17,11 +17,11 @@ public class Client extends User{
         super();
     }
 
-    public Client(String firstName, String lastName, String userName, String password, Role role, Address address) {
+    public Client(String firstName, String lastName, String username, String password, Role role, Address address) {
         super();
         super.setFirstName(firstName);
         this.setLastName(lastName);
-        this.setUserName(userName);
+        this.setUsername(username);
         this.setPassword(password);
         this.role = role;
         this.address = address;
