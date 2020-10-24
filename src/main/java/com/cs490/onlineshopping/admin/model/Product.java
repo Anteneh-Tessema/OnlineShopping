@@ -1,6 +1,10 @@
 package com.cs490.onlineshopping.admin.model;
 
+import java.util.List;
+
 import javax.persistence.*;
+
+import com.cs490.onlineshopping.order.model.OrderItem;
 
 @Entity
 public class Product {

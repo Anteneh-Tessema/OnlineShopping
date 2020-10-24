@@ -10,14 +10,11 @@ import com.cs490.onlineshopping.admin.model.Client;
 import com.cs490.onlineshopping.admin.model.Product;
 
 @Entity
+@Table(name = "user_order")
 public class Order {
     @Id
     @GeneratedValue
     private Long id;
-    
-    @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Product> listItems;
     
     @OneToOne(cascade= {CascadeType.ALL})
     private Address shippingAdress;
@@ -52,7 +49,6 @@ public class Order {
 			List<OrderItem> orderItems, Status status, OffsetTime order_created, double total, double shippingCost,
 			double tax) {
 		super();
-		this.listItems = listItems;
 		this.shippingAdress = shippingAdress;
 		this.billingAddress = billingAddress;
 		this.client = client;
@@ -62,14 +58,6 @@ public class Order {
 		this.total = total;
 		this.shippingCost = shippingCost;
 		this.tax = tax;
-	}
-
-	public List<Product> getListItems() {
-		return listItems;
-	}
-
-	public void setListItems(List<Product> listItems) {
-		this.listItems = listItems;
 	}
 
 	public Address getShippingAdress() {
