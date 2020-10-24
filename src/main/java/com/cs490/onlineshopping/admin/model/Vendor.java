@@ -18,8 +18,14 @@ public class Vendor extends User{
     @Enumerated(EnumType.STRING)
     private Role role=Role.VENDOR;
 
-    public Vendor() {
-        super();
+    public Vendor(){
+
+    }
+
+    public Vendor(String firstName, String lastName, String username, String password,Address address) {
+        super(firstName, lastName, username, password);
+        this.role = Role.CLIENT;
+        this.address = address;
     }
 
     public Address getAddress() {
