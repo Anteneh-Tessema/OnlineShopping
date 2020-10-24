@@ -1,8 +1,10 @@
 package com.cs490.onlineshopping.admin.model;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import java.util.List;
 
 import javax.persistence.*;
+
+import com.cs490.onlineshopping.order.model.Order;
 
 @Entity
 public class Client{
@@ -24,6 +26,9 @@ public class Client{
     public Client() {
         super();
     }
+    
+    @OneToMany(mappedBy="client")
+    private List<Order> orders;
 
     public Client(String firstName, String lastName, String userName, String password, Role role, Address address) {
         super();
@@ -83,7 +88,7 @@ public class Client{
         return address;
     }
 
-    public void setAddress(Address address) {
+	public void setAddress(Address address) {
         this.address = address;
     }
 
