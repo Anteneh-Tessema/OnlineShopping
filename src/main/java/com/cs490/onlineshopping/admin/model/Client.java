@@ -13,17 +13,9 @@ public class Client extends User{
     @OneToOne(cascade= {CascadeType.ALL})
     private Address address;
 
-    public Client() {
-        super();
-    }
-
-    public Client(String firstName, String lastName, String username, String password, Role role, Address address) {
-        super();
-        super.setFirstName(firstName);
-        this.setLastName(lastName);
-        this.setUsername(username);
-        this.setPassword(password);
-        this.role = role;
+    public Client(String firstName, String lastName, String username, String password,Address address) {
+        super(firstName, lastName, username, password);
+        this.role = Role.CLIENT;
         this.address = address;
     }
 
