@@ -23,8 +23,8 @@ public class ProductController {
     @Autowired
     private VendorService vendorService;
 
-    @GetMapping("/getProducts/{vendorid}")
-    public ResponseEntity<List<Product>> getAllProducts(@PathVariable("vendorid") int vendor_id){
+    @GetMapping("/getProductsByVendor/{vendorid}")
+    public ResponseEntity<List<Product>> getAllProductsByVendor(@PathVariable("vendorid") int vendor_id){
         try{
 
             Optional<Vendor> vendor = vendorService.findVendorById(vendor_id);
@@ -36,6 +36,30 @@ public class ProductController {
         }
         catch (Exception ex) {
             return new ResponseEntity<>(new ArrayList<>() , HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<Product>> getAllProducts(){
+        try{
+            return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
+        }
+        catch (Exception ex) {
+            return new ResponseEntity<>(new ArrayList<>() , HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getProduct/{productid}")
+    public ResponseEntity<Product> getProductById(@PathVariable("productid") int productid){
+        try{
+            Optional<Product> product = productService.findById(productid);
+            if(product.isPresent()){
+                new ResponseEntity<>(product.get(), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new Product(), HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception ex) {
+            return new ResponseEntity<>(new Product() , HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
