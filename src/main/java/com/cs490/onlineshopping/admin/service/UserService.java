@@ -23,6 +23,11 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+
+	public Optional<User> findById(int user_id) {
+		return userRepository.findById(user_id);
+	}
+
     @Autowired
     public UserService(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
@@ -53,4 +58,5 @@ public class UserService implements UserDetailsService {
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
         return authorities;
     }
+
 }

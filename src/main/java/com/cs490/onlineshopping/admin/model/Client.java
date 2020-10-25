@@ -1,8 +1,10 @@
 package com.cs490.onlineshopping.admin.model;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import java.util.List;
 
 import javax.persistence.*;
+
+import com.cs490.onlineshopping.order.model.Order;
 
 @Entity
 public class Client extends User{
@@ -17,6 +19,7 @@ public class Client extends User{
         super(firstName, lastName, username, password);
         this.role = Role.CLIENT;
     }
+
     public Client() {
         super();
     }
@@ -34,7 +37,7 @@ public class Client extends User{
         return address;
     }
 
-    public void setAddress(Address address) {
+	public void setAddress(Address address) {
         this.address = address;
     }
 
