@@ -6,8 +6,8 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.cs490.onlineshopping.admin.model.Address;
-import com.cs490.onlineshopping.admin.model.Client;
 import com.cs490.onlineshopping.admin.model.Product;
+import com.cs490.onlineshopping.admin.model.User;
 
 @Entity
 @Table(name = "user_order")
@@ -26,7 +26,7 @@ public class Order {
     
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
-    private Client client;
+    private User user;
     
     @OneToMany(mappedBy="order")
     private List<OrderItem> orderItems;
@@ -45,13 +45,13 @@ public class Order {
 		super();
 	}
 
-	public Order(List<Product> listItems, Address shippingAdress, Address billingAddress, Client client,
+	public Order(List<Product> listItems, Address shippingAdress, Address billingAddress, User user,
 			List<OrderItem> orderItems, Status status, OffsetTime order_created, double total, double shippingCost,
 			double tax) {
 		super();
 		this.shippingAdress = shippingAdress;
 		this.billingAddress = billingAddress;
-		this.client = client;
+		this.user = user;
 		this.orderItems = orderItems;
 		this.status = status;
 		this.order_created = order_created;
@@ -76,12 +76,12 @@ public class Order {
 		this.billingAddress = billingAddress;
 	}
 
-	public Client getClient() {
-		return client;
+	public User getUser() {
+		return user;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public List<OrderItem> getOrderItems() {

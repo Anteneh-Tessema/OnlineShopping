@@ -1,8 +1,7 @@
 package com.cs490.onlineshopping.order.service;
 
-import com.cs490.onlineshopping.admin.model.Product;
-import com.cs490.onlineshopping.admin.model.Vendor;
-import com.cs490.onlineshopping.admin.repository.ProductRepository;
+import com.cs490.onlineshopping.admin.model.User;
+import com.cs490.onlineshopping.order.model.Order;
 import com.cs490.onlineshopping.order.repository.OrderRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,14 @@ import java.util.Optional;
 public class OrderService {
 
     @Autowired
-    private ProductRepository productRepository;
-    
-    @Autowired
     private OrderRepository orderRepository;
 
-  
+    public List<Order> findByUser(User user){
+        return orderRepository.findByUser(user);
+    }
+    
+    public Optional<Order> findById(Integer id){
+        return orderRepository.findById(id);
+    }
+    
 }
