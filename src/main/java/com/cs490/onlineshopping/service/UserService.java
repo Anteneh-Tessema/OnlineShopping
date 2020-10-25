@@ -90,6 +90,15 @@ public class UserService {
     return user;
   }
   
+  public User saveUserDemo(User user) {
+	  if (!userRepository.existsByUsername(user.getUsername())) {
+		  user.setPassword(passwordEncoder.encode(user.getPassword()));
+	      return userRepository.save(user);
+	  }
+	  
+	  throw new CustomException("The user already exists", HttpStatus.NOT_FOUND);
+  }
+  
   public Optional<User> findById(Integer id) {
 	    Optional<User> user = userRepository.findById(id);
 	    if (user == null) {

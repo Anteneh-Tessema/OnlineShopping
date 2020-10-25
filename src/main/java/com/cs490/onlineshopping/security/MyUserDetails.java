@@ -1,11 +1,17 @@
 package com.cs490.onlineshopping.security;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.cs490.onlineshopping.model.Role;
 import com.cs490.onlineshopping.model.User;
 import com.cs490.onlineshopping.repository.UserRepository;
 
@@ -33,5 +39,4 @@ public class MyUserDetails implements UserDetailsService {
         .disabled(false)//
         .build();
   }
-
 }

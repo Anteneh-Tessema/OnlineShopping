@@ -9,7 +9,6 @@ public class Client extends User{
      public Client() {
         super();
     } 
-
    
     @Override
     public String toString() {

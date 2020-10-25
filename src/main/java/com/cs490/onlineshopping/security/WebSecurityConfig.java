@@ -15,7 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true,
+securedEnabled = true, 
+jsr250Enabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
@@ -34,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()//
         .antMatchers("/api/users/signin").permitAll()//
         .antMatchers("/api/users/signup").permitAll()//
-        .antMatchers("/api/products").permitAll()//
+        .antMatchers("/api/products").permitAll()//.hasAuthority("SHOPPER")////
         .antMatchers("/api/products/**").permitAll()//
         .antMatchers("/api/h2-console/**/**").permitAll()
         // Disallow everything else..

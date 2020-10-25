@@ -2,6 +2,8 @@ package com.cs490.onlineshopping.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.cs490.onlineshopping.model.Product;
@@ -28,8 +30,7 @@ public class ProductController {
     public ResponseEntity<List<Product>> getAllProductsByVendor(@PathVariable("vendorid") int vendor_id){
         try{
 
-            Optional<User> vendor = userService.findById(vendor_id);
-            System.out.print(vendor.get().getEmail());
+            Optional<User> vendor = userService.findById(vendor_id);            
             if(vendor.isPresent()){
                 List<Product> pro = productService.findByVendor((Vendor) vendor.get());
                 return new ResponseEntity<>(pro, HttpStatus.OK);
@@ -41,7 +42,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping()
+    @GetMapping()    
     public ResponseEntity<List<Product>> getProducts(){
         try{
             return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);

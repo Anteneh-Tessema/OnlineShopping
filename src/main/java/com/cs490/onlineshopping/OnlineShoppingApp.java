@@ -39,58 +39,64 @@ public class OnlineShoppingApp implements CommandLineRunner {
 
   @Override
   public void run(String... params) throws Exception {
-//    User admin = new Admin();
-//    admin.setUsername("admin");
-//    admin.setPassword("admin");
-//    admin.setEmail("admin@email.com");
-//    admin.setRole(Role.ROLE_ADMIN);
-//
-//    userService.signup(admin);
-//
-//    User client = new Client();
-//    client.setUsername("client");
-//    client.setPassword("client");
-//    client.setEmail("client@email.com");
-//    client.setRole(Role.ROLE_CLIENT);
-//
-//    userService.signup(client);
-//    
-//    Vendor vendor = new Vendor();
-//    vendor.setUsername("vendor");
-//    vendor.setPassword("vendor");
-//    vendor.setEmail("vendor@email.com");
-//    vendor.setRole(Role.ROLE_VENDOR);
-//
-//    userService.signup(vendor);
-//    
-//    Product[] products = new Product[6];
-//    products[0]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
-//                        "Bluetooth technology lets you connect it with compatible devices wirelessly "
-//                        		+ "High-quality AAC audio offers immersive listening experience Built-in "
-//                        		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
-//    products[1]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
-//            "Bluetooth technology lets you connect it with compatible devices wirelessly "
-//            		+ "High-quality AAC audio offers immersive listening experience Built-in "
-//            		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
-//    products[2]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
-//            "Bluetooth technology lets you connect it with compatible devices wirelessly "
-//            		+ "High-quality AAC audio offers immersive listening experience Built-in "
-//            		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
-//    products[3]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
-//            "Bluetooth technology lets you connect it with compatible devices wirelessly "
-//            		+ "High-quality AAC audio offers immersive listening experience Built-in "
-//            		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
-//    products[4]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
-//            "Bluetooth technology lets you connect it with compatible devices wirelessly "
-//            		+ "High-quality AAC audio offers immersive listening experience Built-in "
-//            		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
-//    products[5]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
-//            "Bluetooth technology lets you connect it with compatible devices wirelessly "
-//            		+ "High-quality AAC audio offers immersive listening experience Built-in "
-//            		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
-//    for(Product product: products) {
-//    	productService.saveProduct(product);
-//    }
+    User admin = new Admin();
+    admin.setFirstname("Admin");
+    admin.setLastname("lst");
+    admin.setUsername("admin");
+    admin.setPassword("admin");
+    admin.setEmail("admin@email.com");
+    admin.setRole(Role.ADMIN);
+
+    userService.saveUserDemo(admin);
+
+    User client = new Client();
+    client.setFirstname("client");
+    client.setLastname("lst");
+    client.setUsername("client");
+    client.setPassword("client");
+    client.setEmail("client@email.com");
+    client.setRole(Role.SHOPPER);
+
+    userService.saveUserDemo(client);
+    
+    Vendor vendor = new Vendor();
+    vendor.setFirstname("vendor");
+    vendor.setLastname("lst");
+    vendor.setUsername("vendor");
+    vendor.setPassword("vendor");
+    vendor.setEmail("vendor@email.com");
+    vendor.setRole(Role.VENDOR);
+
+    userService.saveUserDemo(vendor);
+    
+    Product[] products = new Product[6];
+    products[0]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
+                        "Bluetooth technology lets you connect it with compatible devices wirelessly "
+                        		+ "High-quality AAC audio offers immersive listening experience Built-in "
+                        		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
+    products[1]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
+            "Bluetooth technology lets you connect it with compatible devices wirelessly "
+            		+ "High-quality AAC audio offers immersive listening experience Built-in "
+            		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
+    products[2]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
+            "Bluetooth technology lets you connect it with compatible devices wirelessly "
+            		+ "High-quality AAC audio offers immersive listening experience Built-in "
+            		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
+    products[3]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
+            "Bluetooth technology lets you connect it with compatible devices wirelessly "
+            		+ "High-quality AAC audio offers immersive listening experience Built-in "
+            		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
+    products[4]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
+            "Bluetooth technology lets you connect it with compatible devices wirelessly "
+            		+ "High-quality AAC audio offers immersive listening experience Built-in "
+            		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
+    products[5]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
+            "Bluetooth technology lets you connect it with compatible devices wirelessly "
+            		+ "High-quality AAC audio offers immersive listening experience Built-in "
+            		+ "microphone allows you to take calls while working", vendor, 89.99, 3);
+    for(Product product: products) {
+    	productService.saveProduct(product);
+    }
 
 }
 }
