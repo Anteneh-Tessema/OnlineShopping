@@ -24,7 +24,7 @@ public class Vendor extends User{
 
     public Vendor(String firstName, String lastName, String username, String password,Address address) {
         super(firstName, lastName, username, password);
-        this.role = Role.CLIENT;
+        this.role = Role.VENDOR;
         this.address = address;
     }
 
