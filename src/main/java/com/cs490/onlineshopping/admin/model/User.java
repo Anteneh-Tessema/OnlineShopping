@@ -1,5 +1,10 @@
 package com.cs490.onlineshopping.admin.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +18,16 @@ public class User{
     private String lastName;
     private String username;
     private String password;
+
+    public User(){
+    }
+
+    public User(String firstName, String lastName, String username, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+    }
 
     public int getId() {
         return id;

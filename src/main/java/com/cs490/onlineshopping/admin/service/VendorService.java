@@ -16,4 +16,8 @@ public class VendorService {
     public Optional<Vendor> findVendorById(int vendorId){
         return vendorRepository.findById(vendorId);
     }
+
+    public Vendor saveVendor(Vendor vendor){
+        return vendorRepository.save(vendor);
+    }
 }

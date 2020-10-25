@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends PagingAndSortingRepository<Product,Integer> {
+public interface ProductRepository extends PagingAndSortingRepository<Product,Long> {
 
     List<Product> findByVendor(Vendor vendor);
 }

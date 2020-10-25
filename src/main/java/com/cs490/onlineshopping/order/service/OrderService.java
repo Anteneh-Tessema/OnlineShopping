@@ -23,5 +23,9 @@ public class OrderService {
     public Optional<Order> findById(Integer id){
         return orderRepository.findById(id);
     }
+
+	public void saveOrder(Order order) throws Exception {
+        orderRepository.save(order);
+    }
     
 }

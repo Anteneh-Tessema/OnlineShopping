@@ -62,14 +62,14 @@ public class OrderController {
         }
     }
 
-//    @PostMapping("/saveProduct")
-//    public ResponseEntity<Boolean> saveProduct(@RequestBody Product product) {
-//        try {
-//            productService.saveProduct(product);
-//            return new ResponseEntity<>(true,HttpStatus.OK);
-//        }
-//        catch (Exception e){
-//            return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @PostMapping("/")
+    public ResponseEntity<Boolean> placeOrder(@RequestBody Order order) {
+        try {
+            orderService.saveOrder(order);
+            return new ResponseEntity<>(true,HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
