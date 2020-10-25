@@ -39,7 +39,6 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() ->
                         new UsernameNotFoundException(String.format("Username %s not found", username))
                 );
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
                 getAuthorities(user));
     }

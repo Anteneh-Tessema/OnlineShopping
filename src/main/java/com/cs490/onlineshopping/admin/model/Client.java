@@ -16,7 +16,9 @@ public class Client extends User{
     public Client(String firstName, String lastName, String username, String password,Address address) {
         super(firstName, lastName, username, password);
         this.role = Role.CLIENT;
-        this.address = address;
+    }
+    public Client() {
+        super();
     }
 
 
@@ -43,6 +45,3 @@ public class Client extends User{
 
 
 }
-
-
-
