@@ -1,5 +1,7 @@
 package com.cs490.onlineshopping.admin.model;
 
+import com.cs490.onlineshopping.security.Role;
+
 import javax.persistence.*;
 
 @Entity
