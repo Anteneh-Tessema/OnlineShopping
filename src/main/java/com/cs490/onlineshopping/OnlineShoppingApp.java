@@ -42,7 +42,7 @@ public class OnlineShoppingApp implements CommandLineRunner {
     User admin = new Admin();
     admin.setFirstname("Admin");
     admin.setLastname("lst");
-    admin.setUsername("admin");
+    admin.setUsername("admin@email.com");
     admin.setPassword("admin");
     admin.setEmail("admin@email.com");
     admin.setRole(Role.ADMIN);
@@ -52,7 +52,7 @@ public class OnlineShoppingApp implements CommandLineRunner {
     User client = new Client();
     client.setFirstname("client");
     client.setLastname("lst");
-    client.setUsername("client");
+    client.setUsername("client@email.com");
     client.setPassword("client");
     client.setEmail("client@email.com");
     client.setRole(Role.SHOPPER);
@@ -62,7 +62,7 @@ public class OnlineShoppingApp implements CommandLineRunner {
     Vendor vendor = new Vendor();
     vendor.setFirstname("vendor");
     vendor.setLastname("lst");
-    vendor.setUsername("vendor");
+    vendor.setUsername("vendor@email.com");
     vendor.setPassword("vendor");
     vendor.setEmail("vendor@email.com");
     vendor.setRole(Role.VENDOR);
