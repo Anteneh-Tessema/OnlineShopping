@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -21,6 +22,11 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+
+	public Optional<User> findById(int user_id) {
+		return userRepository.findById(user_id);
+	}
 
     @Autowired
     public UserService(PasswordEncoder passwordEncoder) {
@@ -48,4 +54,5 @@ public class UserService implements UserDetailsService {
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
         return authorities;
     }
+
 }
