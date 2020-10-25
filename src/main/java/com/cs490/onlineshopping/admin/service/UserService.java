@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -25,6 +26,10 @@ public class UserService implements UserDetailsService {
     @Autowired
     public UserService(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public Optional<User> findByUsername(String username){
+        return userRepository.findByUsername(username);
     }
 
     public User saveUser(User user){
