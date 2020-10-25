@@ -9,11 +9,14 @@ import com.cs490.onlineshopping.admin.service.ClientService;
 import com.cs490.onlineshopping.admin.service.UserService;
 import com.cs490.onlineshopping.admin.service.VendorService;
 import com.cs490.onlineshopping.model.UserRequest;
+import com.cs490.onlineshopping.model.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -44,38 +47,46 @@ public class AccountController {
     }
 
     @PostMapping("/registerClient")
-    public ResponseEntity<User> saveClient(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<UserResponse> saveClient(@RequestBody UserRequest userRequest) {
         try {
+                Optional<User> user = userService.findByUsername(userRequest.getUsername());
+                if(!user.isPresent()){
+                    Address addresSaved = addressService.saveAddress(new Address(userRequest.getState(),
+                            userRequest.getCity(),
+                            userRequest.getZipCode(),
+                            userRequest.getEmail(),
+                            userRequest.getPhoneNumber()));
+
+                    Client clientSaved = clientService.saveClient(new Client(userRequest.getFirstName(), userRequest.getLastName(), userRequest.getUsername(), passwordEncoder.encode(userRequest.getPassword()), addresSaved));
+
+                    return new ResponseEntity<>(new UserResponse(clientSaved.getId(), clientSaved.getFirstName(), clientSaved.getLastName(),clientSaved.getUsername(), clientSaved.getPassword()), HttpStatus.OK);
+                }
+            return new ResponseEntity<>(new UserResponse("Username already exists"), HttpStatus.OK);
+        }
+            catch (Exception ex) {
+            return new ResponseEntity<>(new UserResponse("Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/registerVendor")
+    public ResponseEntity<UserResponse> saveVendor(@RequestBody UserRequest userRequest) {
+        try {
+            Optional<User> user = userService.findByUsername(userRequest.getUsername());
+            if(!user.isPresent()) {
                 Address addresSaved = addressService.saveAddress(new Address(userRequest.getState(),
                         userRequest.getCity(),
                         userRequest.getZipCode(),
                         userRequest.getEmail(),
                         userRequest.getPhoneNumber()));
 
-                Client clientSaved = clientService.saveClient(new Client(userRequest.getFirstName(), userRequest.getLastName(), userRequest.getUsername(), passwordEncoder.encode(userRequest.getPassword()), addresSaved));
+                Vendor vendorSaved = vendorService.saveVendor(new Vendor(userRequest.getFirstName(), userRequest.getLastName(), userRequest.getUsername(), passwordEncoder.encode(userRequest.getPassword()), addresSaved));
 
-                return new ResponseEntity<>(clientSaved, HttpStatus.OK);
-        }
-            catch (Exception ex) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PostMapping("/registerVendor")
-    public ResponseEntity<User> saveVendor(@RequestBody UserRequest userRequest) {
-        try {
-            Address addresSaved = addressService.saveAddress(new Address(userRequest.getState(),
-                    userRequest.getCity(),
-                    userRequest.getZipCode(),
-                    userRequest.getEmail(),
-                    userRequest.getPhoneNumber()));
-
-            Vendor clientSaved = vendorService.saveVendor(new Vendor(userRequest.getFirstName(), userRequest.getLastName(), userRequest.getUsername(), passwordEncoder.encode(userRequest.getPassword()), addresSaved));
-
-            return new ResponseEntity<>(clientSaved, HttpStatus.OK);
+                return new ResponseEntity<>(new UserResponse(vendorSaved.getId(), vendorSaved.getFirstName(), vendorSaved.getLastName(),vendorSaved.getUsername(), vendorSaved.getPassword()), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new UserResponse("Username already exists"), HttpStatus.OK);
         }
         catch (Exception ex) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new UserResponse("Error"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

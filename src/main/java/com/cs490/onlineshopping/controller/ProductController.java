@@ -56,7 +56,7 @@ public class ProductController {
             if(product.isPresent()){
                 return new ResponseEntity<>(product.get(), HttpStatus.OK);
             }
-            return new ResponseEntity<>(new Product(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Product(), HttpStatus.OK);
         }
         catch (Exception ex) {
             return new ResponseEntity<>(new Product() , HttpStatus.INTERNAL_SERVER_ERROR);
