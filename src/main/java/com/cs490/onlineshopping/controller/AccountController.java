@@ -12,8 +12,8 @@ import com.cs490.onlineshopping.model.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("/users")
@@ -31,6 +31,13 @@ public class AccountController {
     @Autowired
     private VendorService vendorService;
 
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+
+    public AccountController(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @PostMapping("/login")
     public String getLogin() {
         return "login";
@@ -45,7 +52,7 @@ public class AccountController {
                         userRequest.getEmail(),
                         userRequest.getPhoneNumber()));
 
-                Client clientSaved = clientService.saveClient(new Client(userRequest.getFirstName(), userRequest.getLastName(), userRequest.getUsername(), userRequest.getPassword(), addresSaved));
+                Client clientSaved = clientService.saveClient(new Client(userRequest.getFirstName(), userRequest.getLastName(), userRequest.getUsername(), passwordEncoder.encode(userRequest.getPassword()), addresSaved));
 
                 return new ResponseEntity<>(clientSaved, HttpStatus.OK);
         }
@@ -63,7 +70,7 @@ public class AccountController {
                     userRequest.getEmail(),
                     userRequest.getPhoneNumber()));
 
-            Vendor clientSaved = vendorService.saveVendor(new Vendor(userRequest.getFirstName(), userRequest.getLastName(), userRequest.getUsername(), userRequest.getPassword(), addresSaved));
+            Vendor clientSaved = vendorService.saveVendor(new Vendor(userRequest.getFirstName(), userRequest.getLastName(), userRequest.getUsername(), passwordEncoder.encode(userRequest.getPassword()), addresSaved));
 
             return new ResponseEntity<>(clientSaved, HttpStatus.OK);
         }
