@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<start-class>com.cs490.onlineshopping.OnlineShoppingA</start-class>
+		<start-class>com.cs490.onlineshopping.OnlineShoppingApp</start-class>
 	</properties>
 
 	<parent>
