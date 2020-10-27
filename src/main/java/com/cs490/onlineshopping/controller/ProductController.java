@@ -44,12 +44,10 @@ public class ProductController {
         }
     }
 
-    @GetMapping(produces = "application/json")    
+    @GetMapping()    
     public ResponseEntity<List<Product>> getProducts(){
-        try{
-        	final HttpHeaders httpHeaders = new HttpHeaders();
-        	 httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-            return new ResponseEntity<>(productService.findAll(),httpHeaders, HttpStatus.OK);
+        try {        	        	 
+            return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
         }
         catch (Exception ex) {
             return new ResponseEntity<>(new ArrayList<>() , HttpStatus.INTERNAL_SERVER_ERROR);
