@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/api/products").permitAll()//.hasAuthority("SHOPPER")////
         .antMatchers("/api/products/**").permitAll()//
         .antMatchers("/api/h2-console/**/**").permitAll()
-        .antMatchers("/generate").permitAll()
+        .antMatchers("/generate").permitAll()        
         // Disallow everything else..
         .anyRequest().authenticated();
 
