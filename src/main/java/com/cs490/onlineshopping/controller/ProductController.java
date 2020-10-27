@@ -1,6 +1,8 @@
 package com.cs490.onlineshopping.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,10 +44,12 @@ public class ProductController {
         }
     }
 
-    @GetMapping()    
+    @GetMapping(produces = "application/json")    
     public ResponseEntity<List<Product>> getProducts(){
         try{
-            return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
+        	final HttpHeaders httpHeaders = new HttpHeaders();
+        	 httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+            return new ResponseEntity<>(productService.findAll(),httpHeaders, HttpStatus.OK);
         }
         catch (Exception ex) {
             return new ResponseEntity<>(new ArrayList<>() , HttpStatus.INTERNAL_SERVER_ERROR);

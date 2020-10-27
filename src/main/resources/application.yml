@@ -1,9 +1,12 @@
 spring:
   datasource:
-    #url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     url: jdbc:mysql://localhost:3306/onlineshoppingdb
     username: root
     password: password
+    #url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+#    url: jdbc:mysql://qhlv3gz6p74lgwo5:o3da5uy1i4b0q8r7@ryvdxs57afyjk41z.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/s820cmt09lbusqx0
+#    username: qhlv3gz6p74lgwo5
+#    password: o3da5uy1i4b0q8r7
   tomcat:
     max-wait: 20000
     max-active: 50
