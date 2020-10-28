@@ -120,4 +120,20 @@ public class ProductController {
             return new ResponseEntity<>(new Product(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/delete/{productid}")
+    public ResponseEntity<Boolean> deleteProduct(@PathVariable("productid") Long productid) {
+        try {
+            Optional<Product> productDb = productService.findById(productid);
+            if(productDb.isPresent()){
+
+                productService.deleteProduct(productDb.get());
+                return new ResponseEntity<>(true,HttpStatus.OK);
+            }
+            return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

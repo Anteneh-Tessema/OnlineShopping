@@ -24,6 +24,10 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    public void deleteProduct(Product product) throws Exception {
+        productRepository.delete(product);
+    }
+
     public List<Product> findByVendor(Vendor vendor){
         return productRepository.findByVendor(vendor);
     }
