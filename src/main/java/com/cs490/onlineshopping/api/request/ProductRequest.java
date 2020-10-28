@@ -2,6 +2,7 @@ package com.cs490.onlineshopping.api.request;
 
 
 public class ProductRequest {
+    private Long id;
     private String name;
     private String image;
     private String description;
@@ -10,6 +11,14 @@ public class ProductRequest {
     private Integer countInStock;
 
     public ProductRequest() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

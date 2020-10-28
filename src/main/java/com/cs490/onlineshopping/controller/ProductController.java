@@ -91,4 +91,33 @@ public class ProductController {
             return new ResponseEntity<>(new Product(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<Product> updateProduct(@RequestBody ProductRequest productRequest) {
+        try {
+            Optional<Product> productDb = productService.findById(productRequest.getId());
+            if(productDb.isPresent()){
+                Product product = productDb.get();
+                product.setCountInStock(productRequest.getCountInStock()!=null ? productRequest.getCountInStock() : product.getCountInStock());
+                product.setDescription(productRequest.getDescription()!= null ? productRequest.getDescription() : product.getDescription());
+                product.setImage(productRequest.getImage()!= null ? productRequest.getImage() : product.getImage());
+                product.setName(productRequest.getName()!= null ? productRequest.getName() : product.getName());
+                product.setPrice(productRequest.getPrice()!= null ? productRequest.getPrice() : product.getPrice());
+                if(productRequest.getVendor_id()!=null){
+                    Optional<User> vendor = userService.findById(productRequest.getVendor_id());
+                    if(vendor.isPresent()){
+                        product.setVendor((Vendor) vendor.get());
+                    } else {
+                        return new ResponseEntity<>(new Product(),HttpStatus.BAD_REQUEST);
+                    }
+                }
+                productService.saveProduct(product);
+                return new ResponseEntity<>(product,HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new Product(),HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(new Product(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
