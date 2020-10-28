@@ -17,9 +17,9 @@ public class EmailConfig {
     private String host;
     @Value("${smtp.port:587}")
     private Integer port;
-    @Value("${smtp.username:temp@gmail.com}")
+    @Value("${smtp.username:shoppingapp862@gmail.com}")
     private String username;
-    @Value("${smtp.password:password}")
+    @Value("${smtp.password:OnlineShopping}")
     private String password;
 
     @Bean
