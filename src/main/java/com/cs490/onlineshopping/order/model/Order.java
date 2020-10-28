@@ -22,7 +22,7 @@ public class Order {
     @OneToOne(cascade= {CascadeType.ALL})
     private Address billingAddress;
     
-    //TODO transasctionid
+    //TODO paymentId
     
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
@@ -132,6 +132,15 @@ public class Order {
 		this.tax = tax;
 	}
 	
-	
+	public String toString() {
+		return "billing" + this.getBillingAddress().getId() + "/n" +
+				"shipping" + this.getShippingCost() + "/n" +
+				"user" + this.getUser().getUsername() + "/n" +
+				"status" + this.getStatus() + "/n" +
+				"total" + this.getTotal() + "/n" +
+				"tax" + this.getTax() + "/n" +
+				"billing" + this.getBillingAddress() + "/n" +
+				"shippingCost" + this.getShippingCost();
+	}
     
 }

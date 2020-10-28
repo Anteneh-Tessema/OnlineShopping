@@ -20,7 +20,8 @@ public class OrderService {
         return orderRepository.findByUser(user);
     }
     
-    public Optional<Order> findById(Integer id){
+    public Optional<Order> findById(int id) {
+    	System.out.println(orderRepository.findAll());
         return orderRepository.findById(id);
     }
 

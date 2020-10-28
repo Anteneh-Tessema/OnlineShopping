@@ -1,5 +1,6 @@
 package com.cs490.onlineshopping.controller;
 
+import com.cs490.onlineshopping.admin.model.Address;
 import com.cs490.onlineshopping.admin.model.Client;
 import com.cs490.onlineshopping.admin.model.Product;
 import com.cs490.onlineshopping.admin.model.User;
@@ -8,13 +9,18 @@ import com.cs490.onlineshopping.admin.service.ProductService;
 import com.cs490.onlineshopping.admin.service.UserService;
 import com.cs490.onlineshopping.admin.service.VendorService;
 import com.cs490.onlineshopping.order.model.Order;
+import com.cs490.onlineshopping.order.model.OrderItem;
+import com.cs490.onlineshopping.order.model.Status;
 import com.cs490.onlineshopping.order.service.OrderService;
+import com.cs490.onlineshopping.orders.dto.PlaceOrderDTO;
+import com.cs490.onlineshopping.payments.dto.MakePaymentDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +38,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/getOrdersByUser/{userid}")
+    @GetMapping("/user/{userid}")
     public ResponseEntity<List<Order>> getAllOrdersByUser(@PathVariable("userid") int user_id){
         try{
 
@@ -52,6 +58,7 @@ public class OrderController {
     public ResponseEntity<Order> getOrderById(@PathVariable("orderid") int orderid){
         try{
             Optional<Order> order = orderService.findById(orderid);
+            System.out.println(order);
             if(order.isPresent()){
                 new ResponseEntity<>(order.get(), HttpStatus.OK);
             }
@@ -62,14 +69,26 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/")
-    public ResponseEntity<Boolean> placeOrder(@RequestBody Order order) {
+    @PostMapping()
+    public ResponseEntity<Boolean> placeOrder(@RequestBody PlaceOrderDTO order) {
         try {
-            orderService.saveOrder(order);
-            return new ResponseEntity<>(true,HttpStatus.OK);
+//        	System.out.println(order.toString());
+        	Optional<User> userOrder = userService.findById(order.getUser());
+        	if (userOrder.isPresent()) {
+//              orderService.saveOrder(new Order(
+//            		  new ArrayList<Product>() {}, order.getShippingAdress(), order.getBillingAddress(), userOrder,
+//          			List<OrderItem> orderItems, Status status, OffsetTime order_created, double total, double shippingCost,
+//          			double tax
+//            		  ));
+                return new ResponseEntity<>(true,HttpStatus.OK);
+        	}
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
         catch (Exception e){
+        	System.out.println(e);
             return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    //TODO Change status of order
 }
