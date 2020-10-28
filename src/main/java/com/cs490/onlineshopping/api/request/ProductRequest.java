@@ -1,44 +1,24 @@
-package com.cs490.onlineshopping.model;
+package com.cs490.onlineshopping.api.request;
 
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-@Entity
-public class Product {
-    @Id
-    @GeneratedValue
+public class ProductRequest {
     private Long id;
     private String name;
     private String image;
     private String description;
-    
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "vendor_id", nullable = false)
-    private Vendor vendor;
-//    category todo should be table or enum
-
+    private Integer vendor_id;
     private Double price;
     private Integer countInStock;
-    
-    public Product(String name, String image, String description, Vendor vendor, Double price, Integer countInStock) {
-		super();
-		this.name = name;
-		this.image = image;
-		this.description = description;
-		this.vendor = vendor;
-		this.price = price;
-		this.countInStock = countInStock;
-	}
 
-	public Product() {
-		// TODO Auto-generated constructor stub
-	}
+    public ProductRequest() {
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -65,6 +45,14 @@ public class Product {
         this.description = description;
     }
 
+    public Integer getVendor_id() {
+        return vendor_id;
+    }
+
+    public void setVendor_id(Integer vendor_id) {
+        this.vendor_id = vendor_id;
+    }
+
     public Double getPrice() {
         return price;
     }
@@ -80,13 +68,4 @@ public class Product {
     public void setCountInStock(Integer countInStock) {
         this.countInStock = countInStock;
     }
-
-	public Vendor getVendor() {
-		return vendor;
-	}
-
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
-	}
-
 }
