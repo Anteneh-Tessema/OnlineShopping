@@ -1,4 +1,5 @@
 package com.cs490.onlineshopping.controller;
+import com.cs490.onlineshopping.api.request.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -69,13 +70,25 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Boolean> saveProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> saveProduct(@RequestBody ProductRequest productRequest) {
         try {
-            productService.saveProduct(product);
-            return new ResponseEntity<>(true,HttpStatus.OK);
+            Optional<User> vendor = userService.findById(productRequest.getVendor_id());
+            if(vendor.isPresent()){
+                Product product = new Product();
+                product.setCountInStock(productRequest.getCountInStock());
+                product.setDescription(productRequest.getDescription());
+                product.setImage(productRequest.getImage());
+                product.setName(productRequest.getName());
+                product.setPrice(productRequest.getPrice());
+                product.setVendor((Vendor) vendor.get());
+
+                productService.saveProduct(product);
+                return new ResponseEntity<>(product,HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new Product(),HttpStatus.BAD_REQUEST);
         }
         catch (Exception e){
-            return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new Product(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
