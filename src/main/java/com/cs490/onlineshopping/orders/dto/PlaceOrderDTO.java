@@ -1,39 +1,22 @@
 package com.cs490.onlineshopping.orders.dto;
 
-import java.math.BigDecimal;
-import java.time.OffsetTime;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
 import com.cs490.onlineshopping.admin.model.Address;
-import com.cs490.onlineshopping.admin.model.User;
-import com.cs490.onlineshopping.order.model.OrderItem;
-import com.cs490.onlineshopping.order.model.Status;
 
 public class PlaceOrderDTO {
 
-    private Address shippingAdress;   
+    private Address shippingAddress;   
     private Address billingAddress;
     //TODO paymentId
     private int user;  
-//    private List<OrderItem> orderItems;
+    private List<ItemListDTO> itemList;
     private double total;
     private double shippingCost;
     private double tax;
-	public PlaceOrderDTO(Address shippingAdress, Address billingAddress, int user, double total, double shippingCost,
+	public PlaceOrderDTO(Address shippingAddress, Address billingAddress, int user, double total, double shippingCost,
 			double tax) {
 		super();
-		this.shippingAdress = shippingAdress;
+		this.shippingAddress = shippingAddress;
 		this.billingAddress = billingAddress;
 		this.user = user;
 		this.total = total;
@@ -44,11 +27,11 @@ public class PlaceOrderDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Address getShippingAdress() {
-		return shippingAdress;
+	public Address getShippingAddress() {
+		return shippingAddress;
 	}
-	public void setShippingAdress(Address shippingAdress) {
-		this.shippingAdress = shippingAdress;
+	public void setShippingAddress(Address shippingAddress) {
+		this.shippingAddress = shippingAddress;
 	}
 	public Address getBillingAddress() {
 		return billingAddress;
@@ -84,11 +67,17 @@ public class PlaceOrderDTO {
 	@Override
 	public String toString() {
 		return "billing" + this.getBillingAddress() + "\n" +
-				"shipping" + this.getBillingAddress() + "\n" +
+				"shipping" + this.getShippingAddress() + "\n" +
 				"user" + this.getUser() + "\n" +
 				"total" + this.getTotal() + "\n" +
 				"tax" + this.getTax() + "\n" +
 				"shippingCost" + this.getShippingCost();
+	}
+	public List<ItemListDTO> getItemList() {
+		return itemList;
+	}
+	public void setItemList(List<ItemListDTO> itemList) {
+		this.itemList = itemList;
 	}
     
 }

@@ -3,6 +3,9 @@ package com.cs490.onlineshopping.order.service;
 import com.cs490.onlineshopping.admin.model.Product;
 import com.cs490.onlineshopping.admin.model.Vendor;
 import com.cs490.onlineshopping.admin.repository.ProductRepository;
+import com.cs490.onlineshopping.order.model.OrderItem;
+import com.cs490.onlineshopping.order.repository.OrderItemRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,10 @@ import java.util.Optional;
 public class OrderItemService {
 
     @Autowired
-    private ProductRepository productRepository;
+    private OrderItemRepository orderItemRepository;
+
+	public void saveItemOrder(OrderItem orderItem) {
+		orderItemRepository.save(orderItem);
+	}
 
 }

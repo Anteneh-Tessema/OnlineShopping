@@ -3,6 +3,7 @@ package com.cs490.onlineshopping.order.service;
 import com.cs490.onlineshopping.admin.model.User;
 import com.cs490.onlineshopping.order.model.Order;
 import com.cs490.onlineshopping.order.repository.OrderRepository;
+import com.cs490.onlineshopping.orders.dto.OrderDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,11 @@ public class OrderService {
     }
     
     public Optional<Order> findById(int id) {
-    	System.out.println(orderRepository.findAll());
         return orderRepository.findById(id);
     }
 
-	public void saveOrder(Order order) throws Exception {
-        orderRepository.save(order);
+	public Order saveOrder(Order order) throws Exception {
+        return orderRepository.save(order);
     }
     
 }

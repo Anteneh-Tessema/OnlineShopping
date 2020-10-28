@@ -50,7 +50,7 @@ public class ProductController {
     }
 
     @GetMapping("/getProduct/{productid}")
-    public ResponseEntity<Product> getProductById(@PathVariable("productid") Long productid){
+    public ResponseEntity<Product> getProductById(@PathVariable("productid") int productid){
         try{
             Optional<Product> product = productService.findById(productid);
             if(product.isPresent()){

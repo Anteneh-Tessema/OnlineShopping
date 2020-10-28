@@ -10,7 +10,7 @@ import com.cs490.onlineshopping.order.model.OrderItem;
 public class Product {
     @Id
     @GeneratedValue
-    private Long id;
+    private int id;
     private String name;
     private String image;
     private String description;
@@ -22,7 +22,7 @@ public class Product {
     private Double price;
     private Integer countInStock;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
