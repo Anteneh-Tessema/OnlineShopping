@@ -99,7 +99,7 @@ public class UserService {
 	  throw new CustomException("The user already exists", HttpStatus.NOT_FOUND);
   }
   
-  public Optional<User> findById(Integer id) {
+  public Optional<User> findById(Long id) {
 	    Optional<User> user = userRepository.findById(id);
 	    if (user == null) {
 	      throw new CustomException("The user doesn't exist", HttpStatus.NOT_FOUND);

@@ -30,7 +30,7 @@ public class ProductController {
     private UserService userService;
 
     @GetMapping("/vendors/{vendorid}")
-    public ResponseEntity<List<Product>> getAllProductsByVendor(@PathVariable("vendorid") int vendor_id){
+    public ResponseEntity<List<Product>> getAllProductsByVendor(@PathVariable("vendorid") Long vendor_id){
         try{
 
             Optional<User> vendor = userService.findById(vendor_id);            
