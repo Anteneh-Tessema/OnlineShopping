@@ -30,6 +30,7 @@ public class Product {
 //    category todo should be table or enum
 
     private Double price;
+    private Integer countInStock;
     
     public Product(String name, String image, String description, Vendor vendor, Double price, Integer countInStock) {
 		super();
@@ -44,8 +45,6 @@ public class Product {
 	public Product() {
 		// TODO Auto-generated constructor stub
 	}
-
-	private Integer countInStock;
 
     public Long getId() {
         return id;

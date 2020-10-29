@@ -33,6 +33,10 @@ public class ProductService {
     }
    
 
+    public void deleteProduct(Product product) throws Exception {
+        productRepository.delete(product);
+    }
+
     public List<Product> findByVendor(Vendor vendor){
         return productRepository.findByVendor(vendor);
     }
