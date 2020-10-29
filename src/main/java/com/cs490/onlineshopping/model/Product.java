@@ -13,15 +13,7 @@ public class Product {
     private String name;
     private String image;
     private String description;
-    private Boolean isActive = false;
-    
-    public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
+    private Boolean isActive = false;    
 
 	@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -31,6 +23,7 @@ public class Product {
 
     private Double price;
     private Integer countInStock;
+   
     
     public Product(String name, String image, String description, Vendor vendor, Double price, Integer countInStock) {
 		super();
@@ -98,4 +91,11 @@ public class Product {
 		this.vendor = vendor;
 	}
 
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 }

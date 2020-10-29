@@ -108,6 +108,7 @@ public class ProductController {
                 product.setImage(productRequest.getImage()!= null ? productRequest.getImage() : product.getImage());
                 product.setName(productRequest.getName()!= null ? productRequest.getName() : product.getName());
                 product.setPrice(productRequest.getPrice()!= null ? productRequest.getPrice() : product.getPrice());
+                product.setActive(productRequest.getActive()!=null ? productRequest.getActive() : product.getActive());
                 if(productRequest.getVendor_id()!=null){
                     Optional<User> vendor = userService.findById(productRequest.getVendor_id());
                     if(vendor.isPresent()){
