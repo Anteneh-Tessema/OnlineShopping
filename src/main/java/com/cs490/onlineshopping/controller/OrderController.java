@@ -1,24 +1,24 @@
 package com.cs490.onlineshopping.controller;
 
-import com.cs490.onlineshopping.admin.model.Product;
-import com.cs490.onlineshopping.admin.model.User;
-import com.cs490.onlineshopping.admin.service.ProductService;
-import com.cs490.onlineshopping.admin.service.UserService;
-import com.cs490.onlineshopping.order.model.Order;
-import com.cs490.onlineshopping.order.model.OrderItem;
-import com.cs490.onlineshopping.order.model.Status;
-import com.cs490.onlineshopping.order.service.OrderItemService;
-import com.cs490.onlineshopping.order.service.OrderService;
-import com.cs490.onlineshopping.orders.dto.ItemListDTO;
-import com.cs490.onlineshopping.orders.dto.OrderDTO;
-import com.cs490.onlineshopping.orders.dto.OrderStatusDTO;
-import com.cs490.onlineshopping.orders.dto.PlaceOrderDTO;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.cs490.onlineshopping.dto.ItemListDTO;
+import com.cs490.onlineshopping.dto.OrderDTO;
+import com.cs490.onlineshopping.dto.OrderStatusDTO;
+import com.cs490.onlineshopping.dto.PlaceOrderDTO;
+import com.cs490.onlineshopping.model.Order;
+import com.cs490.onlineshopping.model.OrderItem;
+import com.cs490.onlineshopping.model.Product;
+import com.cs490.onlineshopping.model.Status;
+import com.cs490.onlineshopping.model.User;
+import com.cs490.onlineshopping.service.OrderItemService;
+import com.cs490.onlineshopping.service.OrderService;
+import com.cs490.onlineshopping.service.ProductService;
+import com.cs490.onlineshopping.service.UserService;
 
 import java.time.OffsetTime;
 import java.util.ArrayList;
@@ -42,11 +42,19 @@ public class OrderController {
     private OrderItemService orderItemService;
 
     @GetMapping("/user/{userid}")
-    public ResponseEntity<List<Order>> getAllOrdersByUser(@PathVariable("userid") int user_id){
+
+    public ResponseEntity<List<Order>> getAllOrdersByUser(@PathVariable("userid") Long user_id){
+
         try{
             Optional<User> user = userService.findById(user_id);
             if(user.isPresent()){
                 List<Order> order = orderService.findByUser(user.get());
+                List<OrderDTO> orderDTOs = new ArrayList<OrderDTO>();
+                for (int i = 0; i < order.size(); i++) {
+                	OrderDTO target = new OrderDTO(); 
+                	BeanUtils.copyProperties(order.get(i), target);
+                	orderDTOs.add(target);
+                }
                 return new ResponseEntity<>(order, HttpStatus.OK);
             }
             return new ResponseEntity<>(new ArrayList<>() , HttpStatus.BAD_REQUEST);
@@ -57,7 +65,7 @@ public class OrderController {
     }
 
     @GetMapping("/{orderid}")
-    public ResponseEntity<OrderDTO> getOrderById(@PathVariable("orderid") int orderid){
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable("orderid") Long orderid){
         try{
             Optional<Order> order = orderService.findById(orderid);
             if(order.isPresent()){
