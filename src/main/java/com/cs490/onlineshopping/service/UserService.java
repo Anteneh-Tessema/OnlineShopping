@@ -1,5 +1,6 @@
 package com.cs490.onlineshopping.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +77,10 @@ public class UserService {
 	  else {
 	      throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
 	    }
+  }
+  
+  public List<User> findAllUsers(){
+	  return userRepository.findAll();
   }
 
   public void delete(String username) {

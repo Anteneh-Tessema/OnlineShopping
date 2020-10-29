@@ -34,10 +34,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Entry points
     http.authorizeRequests()//
-        .antMatchers("/api/users/signin").permitAll()//
-        .antMatchers("/api/users/signup").permitAll()//
-//        .antMatchers("/api/products").hasRole("SHOPPER")////
-//        .antMatchers("/api/products/**").hasRole("SHOPPER")//
+        .antMatchers("/api/users/login").permitAll()//
+        .antMatchers("/api/users/register").permitAll()//
+        .antMatchers("/api/products").permitAll()////
+        .antMatchers("/api/products/**").permitAll()//
         .antMatchers("/generate").hasRole("ADMIN")        
         // Disallow everything else..
         .anyRequest().authenticated();

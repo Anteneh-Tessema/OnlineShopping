@@ -1,9 +1,15 @@
 package com.cs490.onlineshopping.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +42,21 @@ public class UserController {
 
   @Autowired
   private ModelMapper modelMapper;
+  
+  @Secured("ROLE_ADMIN")
+  @GetMapping()
+  @ApiOperation(value = "${UserController.getUsers}")
+  @ApiResponses(value = {//
+      @ApiResponse(code = 400, message = "Something went wrong"), //
+      @ApiResponse(code = 422, message = "Invalid username/password supplied")})
+  public ResponseEntity<List<User>> getUsers() {
+	  try {      	
+          return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
+      }
+      catch (Exception ex) {
+          return new ResponseEntity<>(new ArrayList<>() , HttpStatus.INTERNAL_SERVER_ERROR) ;
+      }
+  }
 
   @PostMapping("/login")
   @ApiOperation(value = "${UserController.signin}")

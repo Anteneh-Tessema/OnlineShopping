@@ -48,7 +48,7 @@ public class ProductController {
         }
     }
 
-    @Secured({"ROLE_CLIENT", "ROLE_VENDOR", "ROLE_ADMIN"})
+    //@Secured({"ROLE_CLIENT", "ROLE_VENDOR", "ROLE_ADMIN"})
     @GetMapping()    
     public ResponseEntity<Page<Product>> getProducts(@RequestParam Integer pageNumber, @RequestParam String keyword){
         try {      	
