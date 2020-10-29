@@ -13,7 +13,6 @@ public class Product {
     private String name;
     private String image;
     private String description;
-    
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "vendor_id", nullable = false)
@@ -22,6 +21,7 @@ public class Product {
 
     private Double price;
     private Integer countInStock;
+    private Boolean isActive = true;
     
     public Product(String name, String image, String description, Vendor vendor, Double price, Integer countInStock) {
 		super();
@@ -89,4 +89,11 @@ public class Product {
 		this.vendor = vendor;
 	}
 
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 }

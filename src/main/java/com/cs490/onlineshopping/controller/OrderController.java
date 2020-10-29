@@ -4,6 +4,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.cs490.onlineshopping.dto.ItemListDTO;
@@ -25,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/order")
 public class OrderController {
@@ -41,23 +45,19 @@ public class OrderController {
     @Autowired
     private OrderItemService orderItemService;
 
-    @GetMapping("/user/{userid}")
-
-    public ResponseEntity<List<Order>> getAllOrdersByUser(@PathVariable("userid") Long user_id){
+    @GetMapping()
+    public ResponseEntity<List<OrderDTO>> getAllOrdersByUser(HttpServletRequest req){
 
         try{
-            Optional<User> user = userService.findById(user_id);
-            if(user.isPresent()){
-                List<Order> order = orderService.findByUser(user.get());
+        	User user = userService.whoami(req);
+                List<Order> order = orderService.findByUser(user);
                 List<OrderDTO> orderDTOs = new ArrayList<OrderDTO>();
                 for (int i = 0; i < order.size(); i++) {
                 	OrderDTO target = new OrderDTO(); 
                 	BeanUtils.copyProperties(order.get(i), target);
                 	orderDTOs.add(target);
                 }
-                return new ResponseEntity<>(order, HttpStatus.OK);
-            }
-            return new ResponseEntity<>(new ArrayList<>() , HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
         }
         catch (Exception ex) {
             return new ResponseEntity<>(new ArrayList<>() , HttpStatus.INTERNAL_SERVER_ERROR);
