@@ -47,6 +47,12 @@ public class OrderController {
             Optional<User> user = userService.findById(user_id);
             if(user.isPresent()){
                 List<Order> order = orderService.findByUser(user.get());
+                List<OrderDTO> orderDTOs = new ArrayList<OrderDTO>();
+                for (int i = 0; i < order.size(); i++) {
+                	OrderDTO target = new OrderDTO(); 
+                	BeanUtils.copyProperties(order.get(i), target);
+                	orderDTOs.add(target);
+                }
                 return new ResponseEntity<>(order, HttpStatus.OK);
             }
             return new ResponseEntity<>(new ArrayList<>() , HttpStatus.BAD_REQUEST);
