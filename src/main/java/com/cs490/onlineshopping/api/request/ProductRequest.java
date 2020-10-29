@@ -8,7 +8,7 @@ public class ProductRequest {
     private String name;
     private String image;
     private String description;
-    private Integer vendor_id;
+    private Long vendor_id;
     private Double price;
     private Integer countInStock;
     @JsonProperty("isActive")
@@ -49,11 +49,11 @@ public class ProductRequest {
         this.description = description;
     }
 
-    public Integer getVendor_id() {
+    public Long getVendor_id() {
         return vendor_id;
     }
 
-    public void setVendor_id(Integer vendor_id) {
+    public void setVendor_id(Long vendor_id) {
         this.vendor_id = vendor_id;
     }
 

@@ -110,30 +110,30 @@ public class UserService {
         }
         return user;
     }
-
-    public User saveUserDemo(User user) {
-        if (!userRepository.existsByUsername(user.getUsername())) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            return userRepository.save(user);
-        }
-
-        throw new CustomException("The user already exists", HttpStatus.NOT_FOUND);
-    }
-
-    public Optional<User> findById(Integer id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user == null) {
-            throw new CustomException("The user doesn't exist", HttpStatus.NOT_FOUND);
-        }
-        return user;
-    }
-
-    public User whoami(HttpServletRequest req) {
-        return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
-    }
-
-    public String refresh(String username) {
-        return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRole());
-    }
+  
+	  public User saveUserDemo(User user) {
+		  if (!userRepository.existsByUsername(user.getUsername())) {
+			  user.setPassword(passwordEncoder.encode(user.getPassword()));
+		      return userRepository.save(user);
+		  }
+		  
+		  throw new CustomException("The user already exists", HttpStatus.NOT_FOUND);
+	  }
+	  
+	  public Optional<User> findById(Long id) {
+		    Optional<User> user = userRepository.findById(id);
+		    if (user == null) {
+		      throw new CustomException("The user doesn't exist", HttpStatus.NOT_FOUND);
+		    }
+		    return user;
+		  }
+	
+	  public User whoami(HttpServletRequest req) {
+	    return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
+	  }
+	
+	  public String refresh(String username) {
+	    return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRole());
+	  }
 
 }
