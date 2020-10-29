@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/onlineshoppingdb?serverTimezone=UTC
     username: root
-    password: rootroot
+    password: mysql
     #url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
 #    url: jdbc:mysql://qhlv3gz6p74lgwo5:o3da5uy1i4b0q8r7@ryvdxs57afyjk41z.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/s820cmt09lbusqx0
 #    username: qhlv3gz6p74lgwo5
@@ -14,7 +14,7 @@ spring:
     min-idle: 15
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         #dialect: org.hibernate.dialect.H2Dialect
