@@ -5,14 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cs490.onlineshopping.dto.UserDataDTO;
 import com.cs490.onlineshopping.dto.UserResponseDTO;
@@ -58,13 +51,13 @@ public class UserController {
     return userService.signup(modelMapper.map(user, User.class));
   }
 
-  @PostMapping("/profile")
+  @PutMapping("/profile")
   @ApiOperation(value = "${UserController.profile}")
   @ApiResponses(value = {//
           @ApiResponse(code = 400, message = "Something went wrong"), //
           @ApiResponse(code = 403, message = "Access denied"), //
           @ApiResponse(code = 422, message = "Username is already in use")})
-  public User edit(@ApiParam("Signup User") @RequestBody UserDataDTO user) {
+  public User edit(@ApiParam("Edit User") @RequestBody UserDataDTO user) {
     return userService.edit(modelMapper.map(user, User.class));
   }
 
