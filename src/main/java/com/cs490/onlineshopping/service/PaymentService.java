@@ -5,7 +5,7 @@ import com.cs490.onlineshopping.dto.PaymentDTO;
 import com.cs490.onlineshopping.model.Payment;
 import com.cs490.onlineshopping.model.PaymentStatus;
 import com.cs490.onlineshopping.model.PaymentType;
-import com.cs490.onlineshopping.repository.PaymentRepo;
+import com.cs490.onlineshopping.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class PaymentService {
 
     @Autowired
-    PaymentRepo paymentRepo;
+    PaymentRepository paymentRepo;
 
     public void payForItems(MakePaymentDTO makePaymentDto)
     {

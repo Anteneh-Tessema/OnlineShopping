@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface PaymentRepo extends JpaRepository<Payment, Long> {
+public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     @Query(value = "select p from Payment p where p.userId = :userId")
     List<Payment> findByUserId(String userId);
