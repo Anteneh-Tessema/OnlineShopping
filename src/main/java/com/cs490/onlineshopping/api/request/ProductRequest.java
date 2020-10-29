@@ -1,6 +1,8 @@
 package com.cs490.onlineshopping.api.request;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ProductRequest {
     private Long id;
     private String name;
@@ -9,6 +11,8 @@ public class ProductRequest {
     private Integer vendor_id;
     private Double price;
     private Integer countInStock;
+    @JsonProperty("isActive")
+    private Boolean isActive;
 
     public ProductRequest() {
     }
@@ -67,5 +71,13 @@ public class ProductRequest {
 
     public void setCountInStock(Integer countInStock) {
         this.countInStock = countInStock;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 }
