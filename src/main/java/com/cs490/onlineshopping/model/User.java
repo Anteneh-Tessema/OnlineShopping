@@ -24,6 +24,9 @@ public class User{
     @Enumerated(EnumType.STRING)
     @NotNull
     private Role role;
+    
+    @OneToOne
+    private Address address;
 
     public String getFirstname() {
 		return firstname;

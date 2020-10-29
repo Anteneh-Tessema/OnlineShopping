@@ -55,7 +55,7 @@ public class OnlineShoppingApp implements CommandLineRunner {
     client.setUsername("client@email.com");
     client.setPassword("client");
     client.setEmail("client@email.com");
-    client.setRole(Role.SHOPPER);
+    client.setRole(Role.CLIENT);
 
     userService.saveUserDemo(client);
     
