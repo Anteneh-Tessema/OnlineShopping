@@ -36,10 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()//
         .antMatchers("/api/users/signin").permitAll()//
         .antMatchers("/api/users/signup").permitAll()//
-        .antMatchers("/api/products").permitAll()//.hasAuthority("SHOPPER")////
-        .antMatchers("/api/products/**").permitAll()//
-        .antMatchers("/api/h2-console/**/**").permitAll()
-        .antMatchers("/generate").permitAll()        
+//        .antMatchers("/api/products").hasRole("SHOPPER")////
+//        .antMatchers("/api/products/**").hasRole("SHOPPER")//
+        .antMatchers("/generate").hasRole("ADMIN")        
         // Disallow everything else..
         .anyRequest().authenticated();
 

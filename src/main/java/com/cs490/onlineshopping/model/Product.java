@@ -13,8 +13,17 @@ public class Product {
     private String name;
     private String image;
     private String description;
+    private Boolean isActive = false;
     
-    @JsonIgnore
+    public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "vendor_id", nullable = false)
     private Vendor vendor;

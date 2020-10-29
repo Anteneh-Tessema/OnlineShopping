@@ -1,5 +1,8 @@
 package com.cs490.onlineshopping.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,13 +47,14 @@ public class ProductController {
         }
     }
 
+    @Secured({"ROLE_SHOPPER", "ROLE_VENDOR", "ROLE_ADMIN"})
     @GetMapping()    
-    public ResponseEntity<List<Product>> getProducts(){
-        try {        	        	 
-            return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
+    public ResponseEntity<Page<Product>> getProducts(@RequestParam Integer pageNumber, @RequestParam String keyword){
+        try {      	
+            return new ResponseEntity<>(productService.findAllByPage(pageNumber-1, keyword), HttpStatus.OK);
         }
         catch (Exception ex) {
-            return new ResponseEntity<>(new ArrayList<>() , HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null , HttpStatus.INTERNAL_SERVER_ERROR) ;
         }
     }
 
@@ -68,6 +72,7 @@ public class ProductController {
         }
     }
 
+    @Secured({"ROLE_VENDOR"})
     @PostMapping("/save")
     public ResponseEntity<Boolean> saveProduct(@RequestBody Product product) {
         try {
