@@ -37,8 +37,9 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    public List<Product> findByVendor(Vendor vendor){
-        return productRepository.findByVendor(vendor);
+    public Page<Product> findByVendor(Vendor vendor, Integer pageNumber){
+    	Pageable page = PageRequest.of(pageNumber, 2);
+        return productRepository.findByVendor(vendor, page);
     }
 
     public Optional<Product> findById(Long id){

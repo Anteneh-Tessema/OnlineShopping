@@ -11,8 +11,8 @@ public class ProductRequest {
     private Integer vendor_id;
     private Double price;
     private Integer countInStock;
-    @JsonProperty("isActive")
-    private Boolean isActive;
+    @JsonProperty("active")
+    private Boolean active;
 
     public ProductRequest() {
     }
@@ -74,10 +74,10 @@ public class ProductRequest {
     }
 
     public Boolean getActive() {
-        return isActive;
+        return active;
     }
 
     public void setActive(Boolean active) {
-        isActive = active;
+        this.active = active;
     }
 }

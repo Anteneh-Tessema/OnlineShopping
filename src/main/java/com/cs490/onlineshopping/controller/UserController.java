@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cs490.onlineshopping.dto.UserDataDTO;
 import com.cs490.onlineshopping.dto.UserResponseDTO;
+import com.cs490.onlineshopping.model.Admin;
+import com.cs490.onlineshopping.model.Client;
 import com.cs490.onlineshopping.model.User;
+import com.cs490.onlineshopping.model.Vendor;
 import com.cs490.onlineshopping.service.UserService;
 
 import io.swagger.annotations.Api;
@@ -76,7 +79,16 @@ public class UserController {
       @ApiResponse(code = 403, message = "Access denied"), //
       @ApiResponse(code = 422, message = "Username is already in use")})
   public String signup(@ApiParam("Signup User") @RequestBody UserDataDTO user) {
-    return userService.signup(modelMapper.map(user, User.class));
+	  if(user.getRole().getAuthority() == "VENDOR") {
+		  return userService.signup(modelMapper.map(user, Vendor.class));
+	  }
+	  else if(user.getRole().getAuthority() == "CLIENT") {
+			  return userService.signup(modelMapper.map(user, Client.class));		  
+	  }
+	  else {
+			  return userService.signup(modelMapper.map(user, Admin.class));		  
+	  }
+    
   }
 
   @DeleteMapping(value = "/{username}")
@@ -105,7 +117,7 @@ public class UserController {
   }
 
   @GetMapping(value = "/me")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT') or hasRole('ROLE_VENDOR')")
   @ApiOperation(value = "${UserController.me}", response = UserResponseDTO.class, authorizations = { @Authorization(value="apiKey") })
   @ApiResponses(value = {//
       @ApiResponse(code = 400, message = "Something went wrong"), //

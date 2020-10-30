@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product,Long> {
 
-    List<Product> findByVendor(Vendor vendor);    
+    Page<Product> findByVendor(Vendor vendor, Pageable pageable);    
     
     Page<Product> findByNameContaining(String name, Pageable pageable);
     

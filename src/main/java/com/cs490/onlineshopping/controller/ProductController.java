@@ -1,5 +1,8 @@
 package com.cs490.onlineshopping.controller;
 import com.cs490.onlineshopping.api.request.ProductRequest;
+import com.cs490.onlineshopping.dto.UserResponseDTO;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,14 +16,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.cs490.onlineshopping.model.Product;
+import com.cs490.onlineshopping.model.Role;
 import com.cs490.onlineshopping.model.User;
 import com.cs490.onlineshopping.model.Vendor;
 import com.cs490.onlineshopping.service.ProductService;
 import com.cs490.onlineshopping.service.UserService;
 
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/products")
@@ -32,19 +39,22 @@ public class ProductController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @GetMapping("/vendors/{vendorid}")
-    public ResponseEntity<List<Product>> getAllProductsByVendor(@PathVariable("vendorid") int vendor_id){
+    public ResponseEntity getAllProductsByVendor(@PathVariable("vendorid") int vendor_id, @RequestParam Integer pageNumber){
         try{
 
             Optional<User> vendor = userService.findById(vendor_id);            
-            if(vendor.isPresent()){
-                List<Product> pro = productService.findByVendor((Vendor) vendor.get());
-                return new ResponseEntity<>(pro, HttpStatus.OK);
+            if(vendor.isPresent()){                
+            	Vendor v = (Vendor) vendor.get();
+                return new ResponseEntity<>(productService.findByVendor(v, pageNumber-1), HttpStatus.OK);
             }
-            return new ResponseEntity<>(new ArrayList<>() , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null , HttpStatus.BAD_REQUEST);
         }
         catch (Exception ex) {
-            return new ResponseEntity<>(new ArrayList<>() , HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
     }
 
@@ -96,10 +106,35 @@ public class ProductController {
             return new ResponseEntity<>(new Product(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @PutMapping("/update")
-    public ResponseEntity<Product> updateProduct(@RequestBody ProductRequest productRequest) {
+    
+    @Secured({"ROLE_VENDOR"})
+    @PostMapping()
+    public ResponseEntity<Product> createProduct(HttpServletRequest req) {
         try {
+            Optional<User> vendor = Optional.of(userService.whoami(req));
+            if(vendor.isPresent()){
+                Product product = new Product();
+                product.setCountInStock(0);
+                product.setDescription("Description");
+                product.setImage("Image Path");
+                product.setName("Product Name");
+                product.setPrice(0.00);
+                product.setVendor((Vendor) vendor.get());
+
+                productService.saveProduct(product);
+                return new ResponseEntity<>(product,HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new Product(),HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(new Product(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PutMapping()
+    public ResponseEntity<Product> updateProductAdmin(@RequestBody ProductRequest productRequest, HttpServletRequest req) {
+        try {
+        	Optional<User> user = Optional.of(userService.whoami(req));
             Optional<Product> productDb = productService.findById(productRequest.getId());
             if(productDb.isPresent()){
                 Product product = productDb.get();
@@ -108,7 +143,9 @@ public class ProductController {
                 product.setImage(productRequest.getImage()!= null ? productRequest.getImage() : product.getImage());
                 product.setName(productRequest.getName()!= null ? productRequest.getName() : product.getName());
                 product.setPrice(productRequest.getPrice()!= null ? productRequest.getPrice() : product.getPrice());
-                product.setActive(productRequest.getActive()!=null ? productRequest.getActive() : product.getActive());
+                if(user.get().getRole() == Role.ADMIN) {
+                	product.setActive(productRequest.getActive());
+                }
                 if(productRequest.getVendor_id()!=null){
                     Optional<User> vendor = userService.findById(productRequest.getVendor_id());
                     if(vendor.isPresent()){
@@ -127,11 +164,11 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/delete/{productid}")
+    @DeleteMapping("/{productid}")
     public ResponseEntity<Boolean> deleteProduct(@PathVariable("productid") Long productid) {
         try {
             Optional<Product> productDb = productService.findById(productid);
-            if(productDb.isPresent()){
+            if(productDb.isPresent()) {
 
                 productService.deleteProduct(productDb.get());
                 return new ResponseEntity<>(true,HttpStatus.OK);
