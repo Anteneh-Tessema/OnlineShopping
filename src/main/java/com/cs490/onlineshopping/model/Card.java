@@ -8,7 +8,7 @@ import java.math.BigInteger;
 public class Card {
     @Id
     @GeneratedValue
-    private BigInteger id;
+    private Long id;
     @Column(name = "card_number",unique = true)
     private String cardNumber;
     @Column(name = "expiry_date")
@@ -27,11 +27,11 @@ public class Card {
 
 
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

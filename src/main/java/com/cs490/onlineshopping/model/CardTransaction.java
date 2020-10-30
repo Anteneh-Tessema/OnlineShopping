@@ -2,12 +2,12 @@ package com.cs490.onlineshopping.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
+@Entity
 public class CardTransaction {
     @Id
     @GeneratedValue
-    private BigInteger id;
+    private Long id;
     @Column(name = "card_number")
     private String cardNumber;
     @Column(name = "amount")
@@ -17,11 +17,11 @@ public class CardTransaction {
     private PaymentType transactionType;
     private PaymentStatus status;
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
