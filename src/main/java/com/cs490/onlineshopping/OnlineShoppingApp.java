@@ -1,8 +1,11 @@
 package com.cs490.onlineshopping;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.cs490.onlineshopping.model.*;
+import com.cs490.onlineshopping.service.CardService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,12 +13,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.cs490.onlineshopping.model.Admin;
-import com.cs490.onlineshopping.model.Client;
-import com.cs490.onlineshopping.model.Product;
-import com.cs490.onlineshopping.model.Role;
-import com.cs490.onlineshopping.model.User;
-import com.cs490.onlineshopping.model.Vendor;
 import com.cs490.onlineshopping.service.ProductService;
 import com.cs490.onlineshopping.service.UserService;
 
@@ -28,6 +25,9 @@ public class OnlineShoppingApp implements CommandLineRunner {
   @Autowired
   ProductService productService;
 
+  @Autowired
+  CardService cardService;
+
   public static void main(String[] args) {
     SpringApplication.run(OnlineShoppingApp.class, args);
   }
@@ -35,6 +35,16 @@ public class OnlineShoppingApp implements CommandLineRunner {
   @Bean
   public ModelMapper modelMapper() {
     return new ModelMapper();
+  }
+
+  public void setUpDefaultCardInfo()
+  {
+      cardService.registerCard("1111222233334444","Muyinza","Daniel","12/24","531", PaymentMethod.VISA,new BigDecimal("100000"));
+      cardService.registerCard("1111222233334443","Muyinza","Daniel","12/24","532", PaymentMethod.VISA,new BigDecimal("100000"));
+      cardService.registerCard("1111222233334442","Muyinza","Daniel","12/24","533", PaymentMethod.VISA,new BigDecimal("100000"));
+      cardService.registerCard("1111222233334441","Muyinza","Daniel","12/24","534", PaymentMethod.VISA,new BigDecimal("100000"));
+      cardService.registerCard("1111222233334445","Muyinza","Daniel","12/24","535", PaymentMethod.VISA,new BigDecimal("100000"));
+      cardService.registerCard("1111222233334446","Muyinza","Daniel","12/24","536", PaymentMethod.VISA,new BigDecimal("100000"));
   }
 
   @Override
@@ -97,6 +107,8 @@ public class OnlineShoppingApp implements CommandLineRunner {
     for(Product product: products) {
     	productService.saveProduct(product);
     }
+
+    setUpDefaultCardInfo();
 
 }
 }

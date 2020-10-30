@@ -3,6 +3,7 @@ package com.cs490.onlineshopping.service;
 import com.cs490.onlineshopping.dto.MakePaymentDTO;
 import com.cs490.onlineshopping.dto.PaymentDTO;
 import com.cs490.onlineshopping.model.Payment;
+import com.cs490.onlineshopping.model.PaymentMethod;
 import com.cs490.onlineshopping.model.PaymentStatus;
 import com.cs490.onlineshopping.model.PaymentType;
 import com.cs490.onlineshopping.repository.PaymentRepo;
@@ -20,25 +21,47 @@ public class PaymentService {
     @Autowired
     PaymentRepo paymentRepo;
 
+    @Autowired
+    CardService cardService;
+
     public void payForItems(MakePaymentDTO makePaymentDto)
     {
         //pay from customer account
-        pay(makePaymentDto.getAmount(), PaymentType.PAYMENT_FROM, makePaymentDto.getCardNumber(), makePaymentDto.getCustomerUserId());
+        payFromCustomerAccount(makePaymentDto);
         //pay to vendor account
         String vendorCardNumber = "temp";
-        pay(makePaymentDto.getAmount(),PaymentType.PAYMENT_TO,vendorCardNumber, makePaymentDto.getVenderUserId());
+        payToVendorAccount(makePaymentDto);
     }
 
-    private Long pay(BigDecimal amount, PaymentType paymentType, String cardNumber, String userId)
+    private Long payFromCustomerAccount(MakePaymentDTO dto)
     {
+        cardService.withdrawFromCard(dto.getCardNumber(),dto.getCardExpiryDate(),dto.getSecurityCode(),dto.getPaymentMethod(),dto.getAmount());
         Payment payment = new Payment();
-        payment.setAmount(amount);
-        payment.setPaymentType(paymentType);
-        payment.setCardNumber(cardNumber);
+        payment.setAmount(dto.getAmount());
+        payment.setPaymentType(PaymentType.PAYMENT_FROM);
+        payment.setCardNumber(dto.getCardNumber());
         payment.setStatus(PaymentStatus.SUCCESS);
         payment.setStatusDescription("Transaction finished successfully");
         payment.setTransactionTime(new Date());
-        payment.setUserId(userId);
+        payment.setUserId(dto.getCustomerUserId());
+        return paymentRepo.save(payment).getId();
+    }
+
+    private Long payToVendorAccount(MakePaymentDTO dto)
+    {
+        String vendorCardNumber = "";
+        String vendorCardExpDate = "";
+        String vendorCardSecCode = "";
+        PaymentMethod vendorCardType = PaymentMethod.VISA;
+        cardService.depositToCard(vendorCardNumber,vendorCardExpDate,vendorCardSecCode,vendorCardType,dto.getAmount());
+        Payment payment = new Payment();
+        payment.setAmount(dto.getAmount());
+        payment.setPaymentType(PaymentType.PAYMENT_TO);
+        payment.setCardNumber(dto.getCardNumber());
+        payment.setStatus(PaymentStatus.SUCCESS);
+        payment.setStatusDescription("Transaction finished successfully");
+        payment.setTransactionTime(new Date());
+        payment.setUserId(dto.getCustomerUserId());
         return paymentRepo.save(payment).getId();
     }
 
