@@ -1,12 +1,14 @@
 package com.cs490.onlineshopping.dto;
 
+import org.springframework.beans.BeanUtils;
+
 import com.cs490.onlineshopping.model.Product;
 
 public class OrderItemDTO {
 	
 	private Long id;
 	private int quantity;
-    private Product product;
+    private ProductOrderDTO product;
 
 	public Long getId() {
 		return id;
@@ -24,19 +26,22 @@ public class OrderItemDTO {
 		this.quantity = quantity;
 	}
 
-	public Product getProduct() {
+	public ProductOrderDTO getProduct() {
 		return product;
 	}
 
 	public void setProduct(Product product) {
-		this.product = product;
+//		this.product = product;
+		this.product = new ProductOrderDTO();
+		BeanUtils.copyProperties(product, this.product);
 	}
 
 	public OrderItemDTO(Long id, int quantity, Product product) {
 		super();
 		this.id = id;
 		this.quantity = quantity;
-		this.product = product;
+		this.product = new ProductOrderDTO();
+		BeanUtils.copyProperties(product, this.product);
 	}
 
 	public OrderItemDTO() {

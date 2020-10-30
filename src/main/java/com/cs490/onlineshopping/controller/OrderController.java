@@ -4,8 +4,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.cs490.onlineshopping.dto.ItemListDTO;
@@ -77,7 +75,7 @@ public class OrderController {
             	for(int i = 0; i < listItems.size(); i++) {
             		OrderItemDTO target = new OrderItemDTO();
             		target.setId(listItems.get(i).getId());
-//            		target.setProduct(listItems.get(i).getProduct());
+            		target.setProduct(listItems.get(i).getProduct());
             		target.setQuantity(listItems.get(i).getQuantity());
             		orderDTO.getListItemDTO().add(target);
             	}
@@ -86,7 +84,6 @@ public class OrderController {
             return new ResponseEntity<>(new OrderDTO(), HttpStatus.BAD_REQUEST);
         }
         catch (Exception ex) {
-        	System.out.println(ex);
             return new ResponseEntity<>(new OrderDTO() , HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -94,7 +91,6 @@ public class OrderController {
     @PostMapping()
     public ResponseEntity<Boolean> placeOrder(@RequestBody PlaceOrderDTO order) {
         try {
-        	System.out.println(order.getItemList().get(0).toString());
         	Optional<User> userOrder = userService.findById(order.getUser());
         	if (userOrder.isPresent()) {
               Order newOrder = orderService.saveOrder(new Order(
@@ -119,7 +115,6 @@ public class OrderController {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
         catch (Exception e){
-        	System.out.println(e);
             return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -130,7 +125,6 @@ public class OrderController {
         try {
         	Optional<Order> order = orderService.findById(ordStatus.getOrderId());
         	if (order.isPresent()) {
-        		System.out.println(Status.valueOf(ordStatus.getStatus()));
         		order.get().setStatus(Status.valueOf(ordStatus.getStatus()));
         		orderService.saveOrder(order.get());
                 return new ResponseEntity<>(true,HttpStatus.OK);
@@ -138,7 +132,6 @@ public class OrderController {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
         catch (Exception e){
-        	System.out.println(e);
             return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
