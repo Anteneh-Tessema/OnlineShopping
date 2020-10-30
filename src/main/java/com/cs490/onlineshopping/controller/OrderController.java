@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.cs490.onlineshopping.dto.ItemListDTO;
 import com.cs490.onlineshopping.dto.OrderDTO;
+import com.cs490.onlineshopping.dto.OrderItemDTO;
 import com.cs490.onlineshopping.dto.OrderStatusDTO;
 import com.cs490.onlineshopping.dto.PlaceOrderDTO;
 import com.cs490.onlineshopping.model.Order;
@@ -30,7 +31,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/api/order")
 public class OrderController {
 
     @Autowired
@@ -71,12 +72,21 @@ public class OrderController {
             if(order.isPresent()){
             	OrderDTO orderDTO = new OrderDTO();
             	BeanUtils.copyProperties(order.get(), orderDTO);
-            	System.out.println(orderDTO.toString());
+            	orderDTO.setListItemDTO(new ArrayList<OrderItemDTO>());
+            	List<OrderItem> listItems = orderItemService.findByOrder(order.get());
+            	for(int i = 0; i < listItems.size(); i++) {
+            		OrderItemDTO target = new OrderItemDTO();
+            		target.setId(listItems.get(i).getId());
+//            		target.setProduct(listItems.get(i).getProduct());
+            		target.setQuantity(listItems.get(i).getQuantity());
+            		orderDTO.getListItemDTO().add(target);
+            	}
                 return new ResponseEntity<>(orderDTO, HttpStatus.OK);
             }
             return new ResponseEntity<>(new OrderDTO(), HttpStatus.BAD_REQUEST);
         }
         catch (Exception ex) {
+        	System.out.println(ex);
             return new ResponseEntity<>(new OrderDTO() , HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

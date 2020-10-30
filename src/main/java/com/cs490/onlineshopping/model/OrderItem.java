@@ -2,6 +2,8 @@ package com.cs490.onlineshopping.model;
 
 import javax.persistence.*;
 
+import org.hibernate.query.criteria.LiteralHandlingMode;
+
 @Entity
 public class OrderItem {
 
@@ -21,6 +23,10 @@ public class OrderItem {
 
 	public OrderItem() {
 		super();
+	}
+	
+	public Long getId() {
+		return this.id;
 	}
 
 	public OrderItem(Order order, int quantity, Product product) {

@@ -1,6 +1,8 @@
 package com.cs490.onlineshopping.dto;
 
 import java.time.OffsetTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.cs490.onlineshopping.model.Address;
 import com.cs490.onlineshopping.model.Status;
@@ -17,10 +19,10 @@ public class OrderDTO {
     private double total;
     private double shippingCost;
     private double tax;
-    
+    private List<OrderItemDTO> listItemDTO;
 
 	public OrderDTO(Long id, Address shippingAddress, Address billingAddress, User user, Status status,
-			OffsetTime order_created, double total, double shippingCost, double tax) {
+			OffsetTime order_created, double total, double shippingCost, double tax, List<OrderItemDTO> listItemDTO) {
 		super();
 		this.id = id;
 		this.shippingAddress = shippingAddress;
@@ -31,6 +33,7 @@ public class OrderDTO {
 		this.total = total;
 		this.shippingCost = shippingCost;
 		this.tax = tax;
+		this.listItemDTO = new ArrayList<OrderItemDTO>();
 	}
 
 
@@ -128,4 +131,12 @@ public class OrderDTO {
 		this.tax = tax;
 	}
 
+	public List<OrderItemDTO> getListItemDTO() {
+		return listItemDTO;
+	}
+
+
+	public void setListItemDTO(List<OrderItemDTO> listItemDTO) {
+		this.listItemDTO = listItemDTO;
+	}
 }
