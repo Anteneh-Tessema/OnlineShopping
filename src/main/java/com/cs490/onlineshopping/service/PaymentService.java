@@ -68,9 +68,9 @@ public class PaymentService {
         return paymentRepo.save(payment).getId();
     }
 
-    public List<PaymentDTO> getUserPayments(String userId)
+    public List<PaymentDTO> getUserPayments(Integer userId)
     {
-        return paymentRepo.findByUserId(userId).stream().map(p -> getDTO(p)).collect(Collectors.toList());
+        return paymentRepo.findByUserId(userRepository.getOne(userId)).stream().map(p -> getDTO(p)).collect(Collectors.toList());
     }
 
     private PaymentDTO getDTO(Payment payment)
