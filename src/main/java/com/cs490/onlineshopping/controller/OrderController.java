@@ -21,6 +21,7 @@ import com.cs490.onlineshopping.service.OrderService;
 import com.cs490.onlineshopping.service.ProductService;
 import com.cs490.onlineshopping.service.UserService;
 
+import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,22 +90,23 @@ public class OrderController {
     }
 
     @PostMapping()
-    public ResponseEntity<Boolean> placeOrder(@RequestBody PlaceOrderDTO order) {
+    public ResponseEntity<Boolean> placeOrder(@RequestBody PlaceOrderDTO order, HttpServletRequest req) {
         try {
-        	Optional<User> userOrder = userService.findById(order.getUser());
-        	if (userOrder.isPresent()) {
+        	User user = userService.whoami(req);
+        	if (user.getId() != null) {
               Order newOrder = orderService.saveOrder(new Order(
             		order.getShippingAddress(),
             		order.getBillingAddress(),
-            		userOrder.get(),
+            		user,
             		Status.RECEIVED,
-            		OffsetTime.now(),
-            		order.getTotal(),
-            		order.getShippingCost(),
-          			order.getTax()
+            		OffsetDateTime.now(),
+            		order.getTotalPrice(),
+            		order.getShippingPrice(),
+          			order.getTaxPrice(),
+          			order.getItemsPrice()
             		  ));
-              	for (int i = 0; i < order.getItemList().size(); i++) {
-              		ItemListDTO item = order.getItemList().get(i);
+              	for (int i = 0; i < order.getOrderItems().size(); i++) {
+              		ItemListDTO item = order.getOrderItems().get(i);
               		Optional<Product> product = productService.findById(item.getProductId());
     	          	orderItemService.saveItemOrder(new OrderItem(newOrder, item.getQuantity(), product.get())); 
     	          	product.get().setCountInStock(product.get().getCountInStock()-1);
@@ -115,6 +117,7 @@ public class OrderController {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
         catch (Exception e){
+        	System.out.println(e);
             return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

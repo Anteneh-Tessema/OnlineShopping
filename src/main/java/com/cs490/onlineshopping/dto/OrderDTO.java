@@ -1,5 +1,6 @@
 package com.cs490.onlineshopping.dto;
 
+import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +16,25 @@ public class OrderDTO {
     private Address billingAddress;
     private User user;
     private Status status;
-    private OffsetTime order_created;
+    private OffsetDateTime order_created;
     private double total;
     private double shippingCost;
     private double tax;
+    private double price;
     private List<OrderItemDTO> listItemDTO;
 
+	public double getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+
 	public OrderDTO(Long id, Address shippingAddress, Address billingAddress, User user, Status status,
-			OffsetTime order_created, double total, double shippingCost, double tax, List<OrderItemDTO> listItemDTO) {
+			OffsetDateTime order_created, double total, double shippingCost, double tax, List<OrderItemDTO> listItemDTO, double price) {
 		super();
 		this.id = id;
 		this.shippingAddress = shippingAddress;
@@ -33,6 +45,7 @@ public class OrderDTO {
 		this.total = total;
 		this.shippingCost = shippingCost;
 		this.tax = tax;
+		this.price = price;
 		this.listItemDTO = new ArrayList<OrderItemDTO>();
 	}
 
@@ -92,12 +105,12 @@ public class OrderDTO {
 	}
 
 
-	public OffsetTime getOrder_created() {
+	public OffsetDateTime getOrder_created() {
 		return order_created;
 	}
 
 
-	public void setOrder_created(OffsetTime order_created) {
+	public void setOrder_created(OffsetDateTime order_created) {
 		this.order_created = order_created;
 	}
 

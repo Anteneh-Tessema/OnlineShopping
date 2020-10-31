@@ -8,7 +8,8 @@ public enum Status {
     INPROGRESS(1),
     CANCELED(2),
     SHIPPED(3),
-    DELIVERIED(4);
+    DELIVERIED(4),
+    PAID(5);
 	
 	private int value;
     private static Map map = new HashMap<>();

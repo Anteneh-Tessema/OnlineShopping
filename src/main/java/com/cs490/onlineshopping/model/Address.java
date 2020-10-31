@@ -11,78 +11,93 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String firstname;
+    private String lastname;
+    private String address;
     private String state;
     private String city;
-    private String zipCode;
-    private String email;
-    private String phoneNumber;
+    private String postalCode;
+    private String country;
 
     public Address() {
         super();
     }
 
+    public Address(String firstname, String lastname, String address, String state, String city, String postalCode,
+			String country) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.address = address;
+		this.state = state;
+		this.city = city;
+		this.postalCode = postalCode;
+		this.country = country;
+	}
 
+	public String getFirstname() {
+		return firstname;
+	}
 
-    public Address(String state, String city, String zipCode, String email, String phoneNumber) {
-        super();
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
 
-        this.state = state;
-        this.city = city;
-        this.zipCode = zipCode;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
+	public String getLastname() {
+		return lastname;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 
-    public String getState() {
-        return state;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setState(String state) {
-        this.state = state;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public String getState() {
+		return state;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public void setState(String state) {
+		this.state = state;
+	}
 
-    public String getZipCode() {
-        return zipCode;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getPostalCode() {
+		return postalCode;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
 
+	public String getCountry() {
+		return country;
+	}
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+	public Long getId() {
+		return id;
+	}
 
-
-    @Override
+	@Override
     public String toString() {
-        return "Address [addressId=" + id + ", state=" + state + ", city=" + city + ", zipCode=" + zipCode
-                + ", email=" + email + ", phoneNumber=" + phoneNumber + "]";
+        return "Address [addressId=" + id + ", state=" + state + ", city=" + city + ", postalCode=" + postalCode;
     }
 
 

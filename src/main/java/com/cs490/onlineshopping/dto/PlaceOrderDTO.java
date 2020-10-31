@@ -8,77 +8,100 @@ public class PlaceOrderDTO {
 
     private Address shippingAddress;   
     private Address billingAddress;
-    //TODO paymentId
-    private Long user;  
-    private List<ItemListDTO> itemList;
-    private double total;
-    private double shippingCost;
-    private double tax;
-	public PlaceOrderDTO(Address shippingAddress, Address billingAddress, Long user, double total, double shippingCost,
-			double tax) {
+    private List<ItemListDTO> orderItems;
+    private double totalPrice;
+    private double shippingPrice;
+    private double taxPrice;
+    private double itemsPrice;
+    
+	public double getItemsPrice() {
+		return itemsPrice;
+	}
+
+
+	public void setItemsPrice(double itemsPrice) {
+		this.itemsPrice = itemsPrice;
+	}
+
+
+	public PlaceOrderDTO(Address shippingAddress, Address billingAddress, double totalPrice, double shippingPrice,
+			double taxPrice, double itemsPrice) {
 		super();
 		this.shippingAddress = shippingAddress;
 		this.billingAddress = billingAddress;
-		this.user = user;
-		this.total = total;
-		this.shippingCost = shippingCost;
-		this.tax = tax;
+		this.totalPrice = totalPrice;
+		this.shippingPrice = shippingPrice;
+		this.taxPrice = taxPrice;
+		this.itemsPrice = itemsPrice;
 	}
-	public PlaceOrderDTO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
+    
 	public Address getShippingAddress() {
 		return shippingAddress;
 	}
+
+
 	public void setShippingAddress(Address shippingAddress) {
 		this.shippingAddress = shippingAddress;
 	}
+
+
 	public Address getBillingAddress() {
 		return billingAddress;
 	}
+
+
 	public void setBillingAddress(Address billingAddress) {
 		this.billingAddress = billingAddress;
 	}
-	public Long getUser() {
-		return user;
+
+
+	public List<ItemListDTO> getOrderItems() {
+		return orderItems;
 	}
-	public void setUser(Long user) {
-		this.user = user;
+
+
+	public void setOrderItems(List<ItemListDTO> orderItems) {
+		this.orderItems = orderItems;
 	}
-	public double getTotal() {
-		return total;
+
+
+	public double getTotalPrice() {
+		return totalPrice;
 	}
-	public void setTotal(double total) {
-		this.total = total;
+
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
-	public double getShippingCost() {
-		return shippingCost;
+
+
+	public double getShippingPrice() {
+		return shippingPrice;
 	}
-	public void setShippingCost(double shippingCost) {
-		this.shippingCost = shippingCost;
+
+
+	public void setShippingPrice(double shippingPrice) {
+		this.shippingPrice = shippingPrice;
 	}
-	public double getTax() {
-		return tax;
+
+
+	public double getTaxPrice() {
+		return taxPrice;
 	}
-	public void setTax(double tax) {
-		this.tax = tax;
+
+
+	public void setTaxPrice(double taxPrice) {
+		this.taxPrice = taxPrice;
 	}
-    
+
+
 	@Override
 	public String toString() {
 		return "billing" + this.getBillingAddress() + "\n" +
 				"shipping" + this.getShippingAddress() + "\n" +
-				"user" + this.getUser() + "\n" +
-				"total" + this.getTotal() + "\n" +
-				"tax" + this.getTax() + "\n" +
-				"shippingCost" + this.getShippingCost();
+				"total" + this.getTotalPrice() + "\n" +
+				"tax" + this.getTaxPrice() + "\n" +
+				"shippingCost" + this.getShippingPrice();
 	}
-	public List<ItemListDTO> getItemList() {
-		return itemList;
-	}
-	public void setItemList(List<ItemListDTO> itemList) {
-		this.itemList = itemList;
-	}
-    
 }

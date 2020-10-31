@@ -1,5 +1,6 @@
 package com.cs490.onlineshopping.model;
 
+import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.List;
 
@@ -31,19 +32,20 @@ public class Order {
     private Status status;
     
     @Column(name = "order_created")
-    private OffsetTime order_created;
+    private OffsetDateTime order_created;
     
     private double total;
     private double shippingCost;
     private double tax;
+    private double price;
     
 	public Order() {
 		super();
 	}
 
 	public Order(Address shippingAddress, Address billingAddress, User user,
-			Status status, OffsetTime order_created, double total, double shippingCost,
-			double tax) {
+			Status status, OffsetDateTime order_created, double total, double shippingCost,
+			double tax, double price) {
 		super();
 		this.shippingAddress = shippingAddress;
 		this.billingAddress = billingAddress;
@@ -53,6 +55,7 @@ public class Order {
 		this.total = total;
 		this.shippingCost = shippingCost;
 		this.tax = tax;
+		this.price = price;
 	}
 	
 
@@ -100,11 +103,11 @@ public class Order {
 		this.status = status;
 	}
 
-	public OffsetTime getOrder_created() {
+	public OffsetDateTime getOrder_created() {
 		return order_created;
 	}
 
-	public void setOrder_created(OffsetTime order_created) {
+	public void setOrder_created(OffsetDateTime order_created) {
 		this.order_created = order_created;
 	}
 
@@ -132,6 +135,14 @@ public class Order {
 		this.tax = tax;
 	}
 	
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
 	public String toString() {
 		return "billing" + this.getBillingAddress().getId() + "/n" +
 				"shipping" + this.getShippingAddress() + "/n" +
@@ -139,6 +150,7 @@ public class Order {
 				"status" + this.getStatus() + "/n" +
 				"total" + this.getTotal() + "/n" +
 				"tax" + this.getTax() + "/n" +
+				"price" + this.getPrice() + "/n" +
 				"billing" + this.getBillingAddress() + "/n" +
 				"shippingCost" + this.getShippingCost();
 	}
