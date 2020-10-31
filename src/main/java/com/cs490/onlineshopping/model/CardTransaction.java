@@ -8,8 +8,9 @@ public class CardTransaction {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(name = "card_number")
-    private String cardNumber;
+    @ManyToOne
+    @JoinColumn(name="card_id")
+    private Card card;
     @Column(name = "amount")
     private BigDecimal amount;
     @Enumerated(EnumType.STRING)
@@ -25,12 +26,12 @@ public class CardTransaction {
         this.id = id;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
+    public Card getCard() {
+        return card;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+    public void setCard(Card cardId) {
+        this.card = cardId;
     }
 
     public BigDecimal getAmount() {

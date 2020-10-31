@@ -5,27 +5,28 @@ import com.cs490.onlineshopping.model.PaymentMethod;
 import java.math.BigDecimal;
 
 public class MakePaymentDTO {
-    private String customerUserId;
-    private String venderUserId;
+    private Integer customerUserId;
+    private Integer venderUserId;
     private BigDecimal amount;
     private String cardNumber;
     private String cardExpiryDate;
     private String securityCode;
     private PaymentMethod paymentMethod;
+    private Integer orderId;
 
-    public String getCustomerUserId() {
+    public Integer getCustomerUserId() {
         return customerUserId;
     }
 
-    public void setCustomerUserId(String customerUserId) {
+    public void setCustomerUserId(Integer customerUserId) {
         this.customerUserId = customerUserId;
     }
 
-    public String getVenderUserId() {
+    public Integer getVenderUserId() {
         return venderUserId;
     }
 
-    public void setVenderUserId(String venderUserId) {
+    public void setVenderUserId(Integer venderUserId) {
         this.venderUserId = venderUserId;
     }
 
@@ -67,5 +68,13 @@ public class MakePaymentDTO {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 }

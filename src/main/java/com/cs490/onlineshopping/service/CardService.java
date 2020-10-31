@@ -29,13 +29,13 @@ public class CardService {
         card.setOwnerLastName(lastName);
         card.setSecurityCode(secCode);
         card.setPaymentMethod(paymentMethod);
-        cardRepository.save(card);
+        card = cardRepository.save(card);
 
         if(accountBalance.compareTo(BigDecimal.ONE) >= 0)
         {
             CardTransaction transaction = new CardTransaction();
             transaction.setAmount(accountBalance);
-            transaction.setCardNumber(cardNumber);
+            transaction.setCard(card);
             transaction.setStatus(PaymentStatus.SUCCESS);
             transaction.setTransactionType(PaymentType.PAYMENT_TO);
             cardTransactionRepository.save(transaction);
@@ -58,12 +58,12 @@ public class CardService {
         Card card = cardRepository.findCardByCardNumber(cardNumber);
         validateCardDetails(card,expiryDate,secCode,paymentMethod,amount);
         card.setAccountBalance(card.getAccountBalance().add(amount));
-        cardRepository.save(card);
+        card = cardRepository.save(card);
 
         CardTransaction transaction = new CardTransaction();
         transaction.setTransactionType(PaymentType.PAYMENT_TO);
         transaction.setStatus(PaymentStatus.SUCCESS);
-        transaction.setCardNumber(cardNumber);
+        transaction.setCard(card);
         transaction.setAmount(amount);
         cardTransactionRepository.save(transaction);
     }
@@ -78,12 +78,12 @@ public class CardService {
             throw new CustomException("Insufficient account balance to perform transaction",HttpStatus.BAD_REQUEST);
         }
         card.setAccountBalance(card.getAccountBalance().subtract(amount));
-        cardRepository.save(card);
+        card = cardRepository.save(card);
 
         CardTransaction transaction = new CardTransaction();
         transaction.setTransactionType(PaymentType.PAYMENT_FROM);
         transaction.setStatus(PaymentStatus.SUCCESS);
-        transaction.setCardNumber(cardNumber);
+        transaction.setCard(card);
         transaction.setAmount(amount);
         cardTransactionRepository.save(transaction);
     }
