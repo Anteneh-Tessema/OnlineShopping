@@ -9,8 +9,9 @@ public class Payment {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(name = "user_id")
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
     @Column(name = "card_number")
     private String cardNumber;
     @Enumerated(EnumType.STRING)
@@ -32,12 +33,12 @@ public class Payment {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getCardNumber() {

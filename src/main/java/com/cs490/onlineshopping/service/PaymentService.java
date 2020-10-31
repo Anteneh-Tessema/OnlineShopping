@@ -7,10 +7,10 @@ import com.cs490.onlineshopping.model.PaymentMethod;
 import com.cs490.onlineshopping.model.PaymentStatus;
 import com.cs490.onlineshopping.model.PaymentType;
 import com.cs490.onlineshopping.repository.PaymentRepo;
+import com.cs490.onlineshopping.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +23,9 @@ public class PaymentService {
 
     @Autowired
     CardService cardService;
+
+    @Autowired
+    UserRepository userRepository;
 
     public void payForItems(MakePaymentDTO makePaymentDto)
     {
@@ -43,7 +46,7 @@ public class PaymentService {
         payment.setStatus(PaymentStatus.SUCCESS);
         payment.setStatusDescription("Transaction finished successfully");
         payment.setTransactionTime(new Date());
-        payment.setUserId(dto.getCustomerUserId());
+        payment.setUser(userRepository.getOne(dto.getCustomerUserId()));
         return paymentRepo.save(payment).getId();
     }
 
@@ -61,13 +64,13 @@ public class PaymentService {
         payment.setStatus(PaymentStatus.SUCCESS);
         payment.setStatusDescription("Transaction finished successfully");
         payment.setTransactionTime(new Date());
-        payment.setUserId(dto.getCustomerUserId());
+        payment.setUser(userRepository.getOne(dto.getVenderUserId()));
         return paymentRepo.save(payment).getId();
     }
 
-    public List<PaymentDTO> getUserPayments(String userId)
+    public List<PaymentDTO> getUserPayments(Integer userId)
     {
-        return paymentRepo.findByUserId(userId).stream().map(p -> getDTO(p)).collect(Collectors.toList());
+        return paymentRepo.findByUserId(userRepository.getOne(userId)).stream().map(p -> getDTO(p)).collect(Collectors.toList());
     }
 
     private PaymentDTO getDTO(Payment payment)
@@ -77,7 +80,7 @@ public class PaymentService {
         dto.setStatus(payment.getStatus());
         dto.setStatusDescription(payment.getStatusDescription());
         dto.setType(payment.getPaymentType());
-        dto.setUserId(payment.getUserId());
+        dto.setUserId(payment.getUser().getId());
         return dto;
     }
 
