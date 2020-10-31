@@ -32,8 +32,8 @@ public class PaymentService {
         //pay from customer account
         payFromCustomerAccount(makePaymentDto);
         //pay to vendor account
-        String vendorCardNumber = "temp";
-        payToVendorAccount(makePaymentDto);
+        //String vendorCardNumber = "temp";
+        //payToVendorAccount(makePaymentDto);
     }
 
     private Long payFromCustomerAccount(MakePaymentDTO dto)
