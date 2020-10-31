@@ -6,17 +6,17 @@ import com.cs490.onlineshopping.model.PaymentType;
 import java.math.BigDecimal;
 
 public class PaymentDTO {
-    private Integer userId;
+    private Long userId;
     private BigDecimal amount;
     private PaymentStatus status;
     private String statusDescription;
     private PaymentType type;
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
