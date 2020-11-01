@@ -155,4 +155,30 @@ public class OrderController {
             return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/vendor/{vendorId}")
+    public ResponseEntity<List<OrderDTO>> getOrderByVendorId(@PathVariable("vendorId") Long vendorId){
+        try{
+            List<Order> order = orderService.findByVendorId(vendorId);
+            List<OrderDTO> orderDTOs = new ArrayList<OrderDTO>();
+            for (int i = 0; i < order.size(); i++) {
+            	OrderDTO target = new OrderDTO(); 
+            	BeanUtils.copyProperties(order.get(i), target);
+            	target.setListItemDTO(new ArrayList<OrderItemDTO>());
+            	List<OrderItem> listItems = orderItemService.findByOrder(order.get(i));
+            	for(int j = 0; j < listItems.size(); j++) {
+            		OrderItemDTO itemTarget = new OrderItemDTO();
+            		itemTarget.setId(listItems.get(i).getId());
+            		itemTarget.setProduct(listItems.get(i).getProduct());
+            		itemTarget.setQuantity(listItems.get(i).getQuantity());
+            		target.getListItemDTO().add(itemTarget);
+            	}
+            	orderDTOs.add(target);
+            }
+            return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
+	    }
+	    catch (Exception ex) {
+	        return new ResponseEntity<>(new ArrayList<>() , HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+    }
 }

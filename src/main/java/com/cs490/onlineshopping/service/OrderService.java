@@ -27,5 +27,9 @@ public class OrderService {
 	public Order saveOrder(Order order) throws Exception {
         return orderRepository.save(order);
     }
+
+	public List<Order> findByVendorId(Long vendorId) {
+		return orderRepository.getOrderByVendorId(vendorId);
+	}
     
 }
