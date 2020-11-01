@@ -20,6 +20,8 @@ public class OrderItem {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="product_id", nullable=false)
     private Product product;
+	
+	private double price;
 
 	public OrderItem() {
 		super();
@@ -29,11 +31,12 @@ public class OrderItem {
 		return this.id;
 	}
 
-	public OrderItem(Order order, int quantity, Product product) {
+	public OrderItem(Order order, int quantity, Product product, double price) {
 		super();
 		this.order = order;
 		this.quantity = quantity;
 		this.product = product;
+		this.price = price;
 	}
 
 	public Order getOrder() {
@@ -60,4 +63,13 @@ public class OrderItem {
 		this.product = product;
 	}
 
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	
 }

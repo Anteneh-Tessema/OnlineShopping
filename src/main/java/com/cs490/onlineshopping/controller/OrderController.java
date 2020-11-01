@@ -84,6 +84,7 @@ public class OrderController {
             		target.setId(listItems.get(i).getId());
             		target.setProduct(listItems.get(i).getProduct());
             		target.setQuantity(listItems.get(i).getQuantity());
+            		target.setPrice(listItems.get(i).getPrice());
             		orderDTO.getListItemDTO().add(target);
             	}
                 return new ResponseEntity<>(orderDTO, HttpStatus.OK);
@@ -114,7 +115,7 @@ public class OrderController {
               	for (int i = 0; i < order.getOrderItems().size(); i++) {
               		ItemListDTO item = order.getOrderItems().get(i);
               		Optional<Product> product = productService.findById(item.getProductId());
-    	          	orderItemService.saveItemOrder(new OrderItem(newOrder, item.getQuantity(), product.get())); 
+    	          	orderItemService.saveItemOrder(new OrderItem(newOrder, item.getQuantity(), product.get(), item.getPrice())); 
     	          	product.get().setCountInStock(product.get().getCountInStock()-1);
     	          	productService.saveProduct(product.get());
               	}     
@@ -171,6 +172,7 @@ public class OrderController {
             		itemTarget.setId(listItems.get(i).getId());
             		itemTarget.setProduct(listItems.get(i).getProduct());
             		itemTarget.setQuantity(listItems.get(i).getQuantity());
+            		itemTarget.setPrice(listItems.get(i).getPrice());
             		target.getListItemDTO().add(itemTarget);
             	}
             	orderDTOs.add(target);

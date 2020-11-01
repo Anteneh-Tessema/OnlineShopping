@@ -4,15 +4,17 @@ public class ItemListDTO {
 	
 	private Long productId;
 	private int quantity;
+	private double price;
 
 	public ItemListDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ItemListDTO(Long productId, int quantity) {
+	public ItemListDTO(Long productId, int quantity, double price) {
 		super();
 		this.productId = productId;
 		this.quantity = quantity;
+		this.price = price;
 	}
 
 	public Long getProductId() {
@@ -30,6 +32,13 @@ public class ItemListDTO {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
 
 }
