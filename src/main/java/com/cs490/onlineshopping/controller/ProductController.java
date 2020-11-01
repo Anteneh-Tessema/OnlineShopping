@@ -46,7 +46,7 @@ public class ProductController {
     public ResponseEntity getAllProductsByVendor(@PathVariable("vendorid") int vendor_id, @RequestParam Integer pageNumber){
         try{
 
-            Optional<User> vendor = userService.findById(vendor_id);            
+            Optional<User> vendor = Optional.of(userService.findById(vendor_id));            
             if(vendor.isPresent()){                
             	Vendor v = (Vendor) vendor.get();
                 return new ResponseEntity<>(productService.findByVendor(v, pageNumber-1), HttpStatus.OK);
@@ -87,7 +87,7 @@ public class ProductController {
     @PostMapping("/save")
     public ResponseEntity<Product> saveProduct(@RequestBody ProductRequest productRequest) {
         try {
-            Optional<User> vendor = userService.findById(productRequest.getVendor_id());
+            Optional<User> vendor = Optional.of(userService.findById(productRequest.getVendor_id()));
             if(vendor.isPresent()){
                 Product product = new Product();
                 product.setCountInStock(productRequest.getCountInStock());
@@ -147,7 +147,7 @@ public class ProductController {
                 	product.setActive(productRequest.getActive());
                 }
                 if(productRequest.getVendor_id()!=null){
-                    Optional<User> vendor = userService.findById(productRequest.getVendor_id());
+                    Optional<User> vendor = Optional.of(userService.findById(productRequest.getVendor_id()));
                     if(vendor.isPresent()){
                         product.setVendor((Vendor) vendor.get());
                     } else {

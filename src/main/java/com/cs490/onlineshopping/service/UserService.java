@@ -86,6 +86,10 @@ public class UserService {
   public void delete(String username) {
     userRepository.deleteByUsername(username);
   }
+  
+  public void delete(Integer userId) {
+	  userRepository.deleteById(userId);
+  }
 
   public User search(String username) {
     User user = userRepository.findByUsername(username);
@@ -104,12 +108,34 @@ public class UserService {
 	  throw new CustomException("The user already exists", HttpStatus.NOT_FOUND);
   }
   
-  public Optional<User> findById(Integer id) {
-	    Optional<User> user = userRepository.findById(id);
-	    if (user == null) {
-	      throw new CustomException("The user doesn't exist", HttpStatus.NOT_FOUND);
+  public User saveUser(User user) {	  
+	  if (userRepository.existsById(user.getId())) {	  
+	      User u = userRepository.findById(user.getId()).get();
+	      
+	      u.setFirstname(user.getFirstname());
+		  u.setLastname(user.getLastname());
+		  u.setEmail(user.getEmail());
+		  u.setPassword(passwordEncoder.encode(user.getPassword()));
+		  u.setUsername(user.getUsername()); 
+		  return userRepository.save(u);	
+	      
+		    
+	    } 
+	  
+	  else {
+	      throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
 	    }
-	    return user;
+	  
+  }
+  
+  public User findById(Integer id) {
+	    Optional<User> user = userRepository.findById(id);
+	    if (user.isPresent()) {
+	    	return user.get();
+	    }
+	    
+	    throw new CustomException("The user doesn't exist", HttpStatus.NOT_FOUND);
+	    
 	  }
 
   public User whoami(HttpServletRequest req) {

@@ -24,7 +24,7 @@ public class ProductService {
     }
     
     public Page<Product> findAllByPage(Integer pageNumber, String keyword){
-    	Pageable page = PageRequest.of(pageNumber, 2);
+    	Pageable page = PageRequest.of(pageNumber, 5);
     	return productRepository.findByNameContaining(keyword, page);
     }
 
@@ -38,7 +38,7 @@ public class ProductService {
     }
 
     public Page<Product> findByVendor(Vendor vendor, Integer pageNumber){
-    	Pageable page = PageRequest.of(pageNumber, 2);
+    	Pageable page = PageRequest.of(pageNumber, 5);
         return productRepository.findByVendor(vendor, page);
     }
 
