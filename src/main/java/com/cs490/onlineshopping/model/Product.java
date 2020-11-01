@@ -5,6 +5,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.Set;
+
 @Entity
 public class Product {
     @Id
@@ -17,7 +19,8 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "vendor_id", nullable = false)
     private Vendor vendor;
-//    category todo should be table or enum
+    @OneToOne
+    private Category category;
 
     private Double price;
     private Integer countInStock;
@@ -95,5 +98,13 @@ public class Product {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
