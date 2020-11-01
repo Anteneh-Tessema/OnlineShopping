@@ -13,19 +13,10 @@ public class PlaceOrderDTO {
     private double shippingPrice;
     private double taxPrice;
     private double itemsPrice;
-    
-	public double getItemsPrice() {
-		return itemsPrice;
-	}
-
-
-	public void setItemsPrice(double itemsPrice) {
-		this.itemsPrice = itemsPrice;
-	}
-
+    private PaymentOrderDTO paymentMethod;
 
 	public PlaceOrderDTO(Address shippingAddress, Address billingAddress, double totalPrice, double shippingPrice,
-			double taxPrice, double itemsPrice) {
+			double taxPrice, double itemsPrice, PaymentOrderDTO paymentMethod) {
 		super();
 		this.shippingAddress = shippingAddress;
 		this.billingAddress = billingAddress;
@@ -33,6 +24,12 @@ public class PlaceOrderDTO {
 		this.shippingPrice = shippingPrice;
 		this.taxPrice = taxPrice;
 		this.itemsPrice = itemsPrice;
+		this.setPaymentMethod(paymentMethod);
+	}
+	
+
+	public PlaceOrderDTO() {
+		super();
 	}
 	
     
@@ -94,7 +91,23 @@ public class PlaceOrderDTO {
 	public void setTaxPrice(double taxPrice) {
 		this.taxPrice = taxPrice;
 	}
+	
+	public double getItemsPrice() {
+		return itemsPrice;
+	}
 
+
+	public void setItemsPrice(double itemsPrice) {
+		this.itemsPrice = itemsPrice;
+	}
+
+	public PaymentOrderDTO getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(PaymentOrderDTO paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
 
 	@Override
 	public String toString() {

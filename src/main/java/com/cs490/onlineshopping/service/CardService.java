@@ -45,7 +45,7 @@ public class CardService {
     private void validateCardDetails(Card card,String expiryDate,String secCode,PaymentMethod paymentMethod
             ,BigDecimal amount)
     {
-        if(card == null || !card.getPaymentMethod().equals(paymentMethod) || card.getSecurityCode().equals(secCode)
+        if(card == null || !card.getPaymentMethod().equals(paymentMethod) || !card.getSecurityCode().equals(secCode)
                 || !card.getExpiryDate().equals(expiryDate))
         {
             throw new CustomException("Invalid card details", HttpStatus.BAD_REQUEST);
