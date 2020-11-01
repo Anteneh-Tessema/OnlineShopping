@@ -9,6 +9,15 @@ public class OrderItemDTO {
 	private Long id;
 	private int quantity;
     private ProductOrderDTO product;
+    private double price;
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
 
 	public Long getId() {
 		return id;
@@ -36,12 +45,13 @@ public class OrderItemDTO {
 		BeanUtils.copyProperties(product, this.product);
 	}
 
-	public OrderItemDTO(Long id, int quantity, Product product) {
+	public OrderItemDTO(Long id, int quantity, Product product, double price) {
 		super();
 		this.id = id;
 		this.quantity = quantity;
 		this.product = new ProductOrderDTO();
 		BeanUtils.copyProperties(product, this.product);
+		this.price = price;
 	}
 
 	public OrderItemDTO() {

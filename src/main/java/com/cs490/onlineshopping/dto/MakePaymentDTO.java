@@ -12,7 +12,7 @@ public class MakePaymentDTO {
     private String cardExpiryDate;
     private String securityCode;
     private PaymentMethod paymentMethod;
-    private Integer orderId;
+    private Long orderId;
 
     public Long getCustomerUserId() {
         return customerUserId;
@@ -70,11 +70,11 @@ public class MakePaymentDTO {
         this.paymentMethod = paymentMethod;
     }
 
-    public Integer getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 }

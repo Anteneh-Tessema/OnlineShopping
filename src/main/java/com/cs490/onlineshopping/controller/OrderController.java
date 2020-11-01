@@ -7,22 +7,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.cs490.onlineshopping.dto.ItemListDTO;
+import com.cs490.onlineshopping.dto.MakePaymentDTO;
 import com.cs490.onlineshopping.dto.OrderDTO;
 import com.cs490.onlineshopping.dto.OrderItemDTO;
 import com.cs490.onlineshopping.dto.OrderStatusDTO;
 import com.cs490.onlineshopping.dto.PlaceOrderDTO;
 import com.cs490.onlineshopping.model.Order;
 import com.cs490.onlineshopping.model.OrderItem;
+import com.cs490.onlineshopping.model.PaymentMethod;
 import com.cs490.onlineshopping.model.Product;
 import com.cs490.onlineshopping.model.Status;
 import com.cs490.onlineshopping.model.User;
 import com.cs490.onlineshopping.service.OrderItemService;
 import com.cs490.onlineshopping.service.OrderService;
+import com.cs490.onlineshopping.service.PaymentService;
 import com.cs490.onlineshopping.service.ProductService;
 import com.cs490.onlineshopping.service.UserService;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +47,9 @@ public class OrderController {
     
     @Autowired
     private OrderItemService orderItemService;
+    
+    @Autowired
+    private PaymentService paymentService;
 
     @GetMapping()
     public ResponseEntity<List<OrderDTO>> getAllOrdersByUser(HttpServletRequest req){
@@ -78,6 +84,7 @@ public class OrderController {
             		target.setId(listItems.get(i).getId());
             		target.setProduct(listItems.get(i).getProduct());
             		target.setQuantity(listItems.get(i).getQuantity());
+            		target.setPrice(listItems.get(i).getPrice());
             		orderDTO.getListItemDTO().add(target);
             	}
                 return new ResponseEntity<>(orderDTO, HttpStatus.OK);
@@ -108,10 +115,21 @@ public class OrderController {
               	for (int i = 0; i < order.getOrderItems().size(); i++) {
               		ItemListDTO item = order.getOrderItems().get(i);
               		Optional<Product> product = productService.findById(item.getProductId());
-    	          	orderItemService.saveItemOrder(new OrderItem(newOrder, item.getQuantity(), product.get())); 
+    	          	orderItemService.saveItemOrder(new OrderItem(newOrder, item.getQuantity(), product.get(), item.getPrice())); 
     	          	product.get().setCountInStock(product.get().getCountInStock()-1);
     	          	productService.saveProduct(product.get());
               	}     
+              	
+              	//Payment
+              	MakePaymentDTO paymentDTO = new MakePaymentDTO();
+              	paymentDTO.setCustomerUserId(user.getId());
+              	paymentDTO.setAmount(BigDecimal.valueOf(order.getTotalPrice()));
+              	paymentDTO.setCardNumber(order.getPaymentMethod().getCardNumber());
+              	paymentDTO.setCardExpiryDate(order.getPaymentMethod().getExpiryDate());
+              	paymentDTO.setSecurityCode(order.getPaymentMethod().getCvc());
+              	paymentDTO.setPaymentMethod(PaymentMethod.valueOf(order.getPaymentMethod().getMethod().toUpperCase()));
+              	paymentDTO.setOrderId(newOrder.getId());
+              	paymentService.payForItems(paymentDTO);
                 return new ResponseEntity<>(true,HttpStatus.OK);
         	}
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
@@ -137,5 +155,32 @@ public class OrderController {
         catch (Exception e){
             return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    
+    @GetMapping("/vendor/{vendorId}")
+    public ResponseEntity<List<OrderDTO>> getOrderByVendorId(@PathVariable("vendorId") Long vendorId){
+        try{
+            List<Order> order = orderService.findByVendorId(vendorId);
+            List<OrderDTO> orderDTOs = new ArrayList<OrderDTO>();
+            for (int i = 0; i < order.size(); i++) {
+            	OrderDTO target = new OrderDTO(); 
+            	BeanUtils.copyProperties(order.get(i), target);
+            	target.setListItemDTO(new ArrayList<OrderItemDTO>());
+            	List<OrderItem> listItems = orderItemService.findByOrder(order.get(i));
+            	for(int j = 0; j < listItems.size(); j++) {
+            		OrderItemDTO itemTarget = new OrderItemDTO();
+            		itemTarget.setId(listItems.get(i).getId());
+            		itemTarget.setProduct(listItems.get(i).getProduct());
+            		itemTarget.setQuantity(listItems.get(i).getQuantity());
+            		itemTarget.setPrice(listItems.get(i).getPrice());
+            		target.getListItemDTO().add(itemTarget);
+            	}
+            	orderDTOs.add(target);
+            }
+            return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
+	    }
+	    catch (Exception ex) {
+	        return new ResponseEntity<>(new ArrayList<>() , HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
     }
 }
