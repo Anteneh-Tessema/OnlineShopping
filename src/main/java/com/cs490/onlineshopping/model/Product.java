@@ -19,8 +19,10 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "vendor_id", nullable = false)
     private Vendor vendor;
-    @OneToOne
-    private Category category;
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="product_category", joinColumns={@JoinColumn(referencedColumnName="id")}
+            , inverseJoinColumns={@JoinColumn(referencedColumnName="id")})
+    private Set<Category> categories;
 
     private Double price;
     private Integer countInStock;
@@ -100,11 +102,11 @@ public class Product {
         isActive = active;
     }
 
-    public Category getCategory() {
-        return category;
+    public Set<Category> getCategory() {
+        return categories;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(Set<Category> categories) {
+        this.categories = categories;
     }
 }
