@@ -3,6 +3,9 @@ package com.cs490.onlineshopping.api.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProductRequest {
     private Long id;
     private String name;
@@ -13,6 +16,7 @@ public class ProductRequest {
     private Integer countInStock;
     @JsonProperty("isActive")
     private Boolean isActive;
+    private List<CategoryRequest> categoriesId = new ArrayList<>();
 
     public ProductRequest() {
     }
@@ -79,5 +83,13 @@ public class ProductRequest {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public List<CategoryRequest> getCategoriesId() {
+        return categoriesId;
+    }
+
+    public void setCategoriesId(List<CategoryRequest> categoriesId) {
+        this.categoriesId = categoriesId;
     }
 }

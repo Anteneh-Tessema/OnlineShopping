@@ -1,5 +1,8 @@
 package com.cs490.onlineshopping.controller;
+import com.cs490.onlineshopping.api.request.CategoryRequest;
 import com.cs490.onlineshopping.api.request.ProductRequest;
+import com.cs490.onlineshopping.model.Category;
+import com.cs490.onlineshopping.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,9 +18,7 @@ import com.cs490.onlineshopping.model.Vendor;
 import com.cs490.onlineshopping.service.ProductService;
 import com.cs490.onlineshopping.service.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/products")
@@ -28,6 +29,9 @@ public class ProductController {
     
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/vendors/{vendorid}")
     public ResponseEntity<List<Product>> getAllProductsByVendor(@PathVariable("vendorid") Long vendor_id){
@@ -72,9 +76,23 @@ public class ProductController {
     @PostMapping("/save")
     public ResponseEntity<Product> saveProduct(@RequestBody ProductRequest productRequest) {
         try {
+            if(productRequest.getCategoriesId().size()==0)
+                return new ResponseEntity<>(new Product(),HttpStatus.BAD_REQUEST);
+            Set<Category> categories = new HashSet<>();
+            for (CategoryRequest categoryid: productRequest.getCategoriesId()) {
+                Optional<Category> category = categoryService.findById(categoryid.getId());
+                if(category.isPresent()){
+                    categories.add(category.get());
+                }
+            }
+            if(categories.size()==0)
+                return new ResponseEntity<>(new Product(),HttpStatus.BAD_REQUEST);
+            Product product = new Product();
+            product.setCategory(categories);
+
             Optional<User> vendor = userService.findById(productRequest.getVendor_id());
             if(vendor.isPresent()){
-                Product product = new Product();
+
                 product.setCountInStock(productRequest.getCountInStock());
                 product.setDescription(productRequest.getDescription());
                 product.setImage(productRequest.getImage());
@@ -112,6 +130,19 @@ public class ProductController {
                         return new ResponseEntity<>(new Product(),HttpStatus.BAD_REQUEST);
                     }
                 }
+
+                if(productRequest.getCategoriesId().size() != 0){
+                    Set<Category> categories = new HashSet<>();
+                    for (CategoryRequest categoryid: productRequest.getCategoriesId()) {
+                        Optional<Category> category = categoryService.findById(categoryid.getId());
+                        if(category.isPresent()){
+                            categories.add(category.get());
+                        }
+                    }
+                    if(categories.size()>0)
+                        product.setCategory(categories);
+                }
+
                 productService.saveProduct(product);
                 return new ResponseEntity<>(product,HttpStatus.OK);
             }
