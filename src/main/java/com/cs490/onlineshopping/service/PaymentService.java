@@ -2,16 +2,22 @@ package com.cs490.onlineshopping.service;
 
 import com.cs490.onlineshopping.dto.MakePaymentDTO;
 import com.cs490.onlineshopping.dto.PaymentDTO;
+import com.cs490.onlineshopping.model.Order;
 import com.cs490.onlineshopping.model.Payment;
+import com.cs490.onlineshopping.model.PaymentMethod;
 import com.cs490.onlineshopping.model.PaymentStatus;
 import com.cs490.onlineshopping.model.PaymentType;
+
 import com.cs490.onlineshopping.repository.PaymentRepository;
+
+import com.cs490.onlineshopping.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,31 +26,70 @@ public class PaymentService {
     @Autowired
     PaymentRepository paymentRepo;
 
+    @Autowired
+    CardService cardService;
+
+    @Autowired
+    UserRepository userRepository;
+    
+    @Autowired
+    OrderService orderService;
+
     public void payForItems(MakePaymentDTO makePaymentDto)
     {
         //pay from customer account
-        pay(makePaymentDto.getAmount(), PaymentType.PAYMENT_FROM, makePaymentDto.getCardNumber(), makePaymentDto.getCustomerUserId());
+        payFromCustomerAccount(makePaymentDto);
         //pay to vendor account
-        String vendorCardNumber = "temp";
-        pay(makePaymentDto.getAmount(),PaymentType.PAYMENT_TO,vendorCardNumber, makePaymentDto.getVenderUserId());
+        //String vendorCardNumber = "temp";
+        //payToVendorAccount(makePaymentDto);
     }
 
-    private Long pay(BigDecimal amount, PaymentType paymentType, String cardNumber, String userId)
+    private Long payFromCustomerAccount(MakePaymentDTO dto)
     {
+        cardService.withdrawFromCard(dto.getCardNumber(),dto.getCardExpiryDate(),dto.getSecurityCode(),dto.getPaymentMethod(),dto.getAmount());
         Payment payment = new Payment();
-        payment.setAmount(amount);
-        payment.setPaymentType(paymentType);
-        payment.setCardNumber(cardNumber);
+        payment.setOrder(orderService.findById(dto.getOrderId()).get());
+        payment.setAmount(dto.getAmount());
+        payment.setPaymentType(PaymentType.PAYMENT_FROM);
+        payment.setCardNumber(dto.getCardNumber());
         payment.setStatus(PaymentStatus.SUCCESS);
         payment.setStatusDescription("Transaction finished successfully");
         payment.setTransactionTime(new Date());
-        payment.setUserId(userId);
+        payment.setPaymentMethod(dto.getPaymentMethod());
+        payment.setUser(userRepository.getOne(dto.getCustomerUserId()));
         return paymentRepo.save(payment).getId();
     }
 
-    public List<PaymentDTO> getUserPayments(String userId)
+    private Long payToVendorAccount(MakePaymentDTO dto)
     {
-        return paymentRepo.findByUserId(userId).stream().map(p -> getDTO(p)).collect(Collectors.toList());
+        String vendorCardNumber = "";
+        String vendorCardExpDate = "";
+        String vendorCardSecCode = "";
+        PaymentMethod vendorCardType = PaymentMethod.VISA;
+        cardService.depositToCard(vendorCardNumber,vendorCardExpDate,vendorCardSecCode,vendorCardType,dto.getAmount());
+        Payment payment = new Payment();
+        payment.setAmount(dto.getAmount());
+        payment.setPaymentType(PaymentType.PAYMENT_TO);
+        payment.setCardNumber(dto.getCardNumber());
+        payment.setStatus(PaymentStatus.SUCCESS);
+        payment.setStatusDescription("Transaction finished successfully");
+        payment.setTransactionTime(new Date());
+        payment.setUser(userRepository.getOne(dto.getVenderUserId()));
+        return paymentRepo.save(payment).getId();
+    }
+
+    public List<PaymentDTO> getUserPayments(Long userId)
+    {
+        return paymentRepo.findByUserId(userRepository.getOne(userId)).stream().map(p -> getDTO(p)).collect(Collectors.toList());
+    }
+    
+    public Payment getPayment(Long order_id) {
+    	Optional<Order> order = orderService.findById(order_id);
+    	if(order.isPresent()) {
+    		return paymentRepo.findByOrder(order.get());
+    	}
+    	throw new IllegalArgumentException("Order cannot be found");
+    	
     }
 
     private PaymentDTO getDTO(Payment payment)
@@ -53,8 +98,8 @@ public class PaymentService {
         dto.setAmount(payment.getAmount());
         dto.setStatus(payment.getStatus());
         dto.setStatusDescription(payment.getStatusDescription());
-        dto.setType(payment.getPaymentType());
-        dto.setUserId(payment.getUserId());
+        dto.setMethod(payment.getMethod());
+        dto.setUserId(payment.getUser().getId());
         return dto;
     }
 

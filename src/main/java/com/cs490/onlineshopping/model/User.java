@@ -8,7 +8,7 @@ public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @NotNull
     private String firstname;
     @NotNull
@@ -25,7 +25,23 @@ public class User{
     @NotNull
     private Role role;
     
-    @OneToOne
+    private User(@NotNull String firstname, @NotNull String lastname, @NotNull String username,
+			@NotNull String password, @NotNull String email, @NotNull Role role, Address address) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.address = address;
+	}
+    
+    public User() {
+    	
+    }
+
+	@OneToOne
     private Address address;
 
     public String getFirstname() {
@@ -44,15 +60,11 @@ public class User{
 		this.lastname = lastname;
 	}
 
-	public int getId() {
+	public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-   public String getUsername() {
+	public String getUsername() {
         return username;
     }
 

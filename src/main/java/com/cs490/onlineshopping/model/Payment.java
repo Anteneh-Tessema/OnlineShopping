@@ -9,8 +9,9 @@ public class Payment {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(name = "user_id")
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
     @Column(name = "card_number")
     private String cardNumber;
     @Enumerated(EnumType.STRING)
@@ -23,8 +24,38 @@ public class Payment {
     private BigDecimal amount;
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
+    @OneToOne
+    private Order order;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod method;
 
-    public Long getId() {
+    public Payment() {
+		
+	}
+
+	private Payment(User user, String cardNumber, PaymentStatus status, String statusDescription, Date transactionTime,
+			BigDecimal amount, PaymentType paymentType, Order order, PaymentMethod method) {
+		super();
+		this.user = user;
+		this.cardNumber = cardNumber;
+		this.status = status;
+		this.statusDescription = statusDescription;
+		this.transactionTime = transactionTime;
+		this.amount = amount;
+		this.paymentType = paymentType;
+		this.order = order;
+		this.method = method;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -32,12 +63,12 @@ public class Payment {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getCardNumber() {
@@ -87,4 +118,13 @@ public class Payment {
     public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
+
+	public PaymentMethod getMethod() {
+		
+		return method;
+	}
+	
+	public void setPaymentMethod(PaymentMethod method) {
+		this.method = method;
+	}
 }

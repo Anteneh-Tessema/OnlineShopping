@@ -43,7 +43,7 @@ public class ProductController {
     private ModelMapper modelMapper;
 
     @GetMapping("/vendors/{vendorid}")
-    public ResponseEntity getAllProductsByVendor(@PathVariable("vendorid") int vendor_id, @RequestParam Integer pageNumber){
+    public ResponseEntity getAllProductsByVendor(@PathVariable("vendorid") Long vendor_id, @RequestParam Integer pageNumber){
         try{
 
             Optional<User> vendor = Optional.of(userService.findById(vendor_id));            

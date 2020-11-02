@@ -87,7 +87,7 @@ public class UserService {
     userRepository.deleteByUsername(username);
   }
   
-  public void delete(Integer userId) {
+  public void delete(Long userId) {
 	  userRepository.deleteById(userId);
   }
 
@@ -128,7 +128,7 @@ public class UserService {
 	  
   }
   
-  public User findById(Integer id) {
+  public User findById(Long id) {
 	    Optional<User> user = userRepository.findById(id);
 	    if (user.isPresent()) {
 	    	return user.get();

@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class UserResponseDTO {
 
   @ApiModelProperty(position = 0)
-  private Integer id;
+  private Long id;
   @ApiModelProperty(position = 1)
   private String username;
   @ApiModelProperty(position = 2)
@@ -17,11 +17,11 @@ public class UserResponseDTO {
   @ApiModelProperty(position = 3)
   Role role;
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
