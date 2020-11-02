@@ -131,6 +131,11 @@ public class ProductController {
         }
     }
     
+    /**
+     * 
+     * @author Amit Bhattarai
+     *
+     */
     @PutMapping()
     public ResponseEntity<Product> updateProductAdmin(@RequestBody ProductRequest productRequest, HttpServletRequest req) {
         try {

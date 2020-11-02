@@ -54,7 +54,7 @@ public class CardService {
     public void depositToCard(String cardNumber,String expiryDate,String secCode,PaymentMethod paymentMethod
                                 ,BigDecimal amount)
     {
-        Card card = cardRepository.findCardByCardNumber(cardNumber);
+        Card card = cardRepository.findByCardNumber(cardNumber);
         validateCardDetails(card,expiryDate,secCode,paymentMethod,amount);
         card.setAccountBalance(card.getAccountBalance().add(amount));
         card = cardRepository.save(card);
@@ -70,7 +70,7 @@ public class CardService {
     public void withdrawFromCard(String cardNumber,String expiryDate,String secCode,PaymentMethod paymentMethod
             ,BigDecimal amount)
     {
-        Card card = cardRepository.findCardByCardNumber(cardNumber);
+        Card card = cardRepository.findByCardNumber(cardNumber);
         validateCardDetails(card,expiryDate,secCode,paymentMethod,amount);
         if(amount.compareTo(amount) > 0)
         {

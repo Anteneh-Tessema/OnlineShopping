@@ -2,6 +2,7 @@ package com.cs490.onlineshopping.controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -87,7 +88,11 @@ public class OrderController {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @author Amit Bhattarai
+	 *
+	 */
 	@GetMapping()
 	public ResponseEntity<List<OrderDTO>> getAllOrders() {
 
@@ -117,6 +122,11 @@ public class OrderController {
 		}
 	}
 
+	/**
+	 * 
+	 * @author Amit Bhattarai
+	 *
+	 */
 	@GetMapping("/vendors")
 	public ResponseEntity<List<OrderDTO>> getAllOrdersByVendor(HttpServletRequest req) {
 		try {

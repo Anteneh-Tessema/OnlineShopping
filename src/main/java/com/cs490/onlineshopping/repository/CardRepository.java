@@ -12,6 +12,6 @@ import java.math.BigInteger;
 @Transactional
 public interface CardRepository extends JpaRepository<Card, BigInteger> {
 
-    @Query(value = "select c from Card c where c.cardNumber = :cardNumber")
-    Card findCardByCardNumber(String cardNumber);
+    Card findByCardNumber(String cardNumber);
+    
 }

@@ -36,6 +36,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 
+/**
+ * 
+ * @author Amit Bhattarai
+ *
+ */
 @RestController
 @RequestMapping("/api/users")
 @Api(tags = "users")
