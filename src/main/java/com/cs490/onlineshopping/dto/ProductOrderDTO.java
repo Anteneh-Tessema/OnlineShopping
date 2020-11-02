@@ -8,12 +8,13 @@ public class ProductOrderDTO {
 	    private String description; 
 	    private Double price;
 	    private Boolean isActive = true;
+	    private String category;
 
 	public ProductOrderDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProductOrderDTO(Long id, String name, String image, String description, Double price, Boolean isActive) {
+	public ProductOrderDTO(Long id, String name, String image, String description, Double price, Boolean isActive, String category) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -21,6 +22,7 @@ public class ProductOrderDTO {
 		this.description = description;
 		this.price = price;
 		this.isActive = isActive;
+		this.category = category;
 	}
 
 	public Long getId() {
@@ -69,6 +71,14 @@ public class ProductOrderDTO {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 }

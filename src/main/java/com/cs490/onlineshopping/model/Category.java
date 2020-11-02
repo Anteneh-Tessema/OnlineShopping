@@ -12,13 +12,16 @@ public class Category {
     @GeneratedValue
     private Integer id;
     private String name;
-    @ManyToMany(mappedBy="categories")
-    private Set<Product> products;
-
+    
     public Category() {
     }
 
-    public Integer getId() {
+    public Category(String name) {
+		super();
+		this.name = name;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -32,13 +35,5 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
     }
 }

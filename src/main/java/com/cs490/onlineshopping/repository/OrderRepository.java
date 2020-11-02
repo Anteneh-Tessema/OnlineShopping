@@ -12,7 +12,4 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order,Long> {
 
 	List<Order> findByUser(User user);
-	
-	@Query("SELECT o FROM Order o JOIN o.orderItems i WHERE i.product.vendor.id = ?1 GROUP BY o.id")
-	List<Order> getOrderByVendorId(Long vendorId);   
 }

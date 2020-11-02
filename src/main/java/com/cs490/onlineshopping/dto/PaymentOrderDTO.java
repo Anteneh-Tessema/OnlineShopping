@@ -1,7 +1,6 @@
 package com.cs490.onlineshopping.dto;
 
 public class PaymentOrderDTO {
-
 	private String method;
 	private String cardNumber;
 	private String expiryDate;
