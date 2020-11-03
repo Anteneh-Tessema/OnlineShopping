@@ -2,11 +2,7 @@ package com.cs490.onlineshopping.service;
 
 import com.cs490.onlineshopping.dto.MakePaymentDTO;
 import com.cs490.onlineshopping.dto.PaymentDTO;
-import com.cs490.onlineshopping.model.Order;
-import com.cs490.onlineshopping.model.Payment;
-import com.cs490.onlineshopping.model.PaymentMethod;
-import com.cs490.onlineshopping.model.PaymentStatus;
-import com.cs490.onlineshopping.model.PaymentType;
+import com.cs490.onlineshopping.model.*;
 
 import com.cs490.onlineshopping.repository.PaymentRepository;
 
@@ -42,6 +38,7 @@ public class PaymentService {
         //pay to vendor account
         //String vendorCardNumber = "temp";
         //payToVendorAccount(makePaymentDto);
+        sendRecieptEmail(makePaymentDto);
     }
 
     private Long payFromCustomerAccount(MakePaymentDTO dto)
@@ -58,6 +55,17 @@ public class PaymentService {
         payment.setPaymentMethod(dto.getPaymentMethod());
         payment.setUser(userRepository.getOne(dto.getCustomerUserId()));
         return paymentRepo.save(payment).getId();
+    }
+
+    private void sendRecieptEmail(MakePaymentDTO dto)
+    {
+        Order order = orderService.findById(dto.getOrderId()).get();
+        StringBuilder emailMessage = new StringBuilder("Hello Customer \n");
+        emailMessage.append("We have received payment of "+dto.getAmount()+" for the following items");
+        for(OrderItem item : order.getOrderItems())
+        {
+            emailMessage.append(item.getProduct().getName()+ " "+item.getQuantity()+" unit(s)");
+        }
     }
 
     private Long payToVendorAccount(MakePaymentDTO dto)
