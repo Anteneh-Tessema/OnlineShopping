@@ -16,7 +16,7 @@ public class ProductRequest {
     private Integer countInStock;
     @JsonProperty("active")
     private Boolean active;
-    private CategoryRequest categoryId;
+    private Integer categoryId;
 
     public ProductRequest() {
     }
@@ -85,11 +85,11 @@ public class ProductRequest {
         this.active = active;
     }
 
-    public CategoryRequest getCategoryId() {
+    public Integer getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(CategoryRequest categoryId) {
+    public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
 }

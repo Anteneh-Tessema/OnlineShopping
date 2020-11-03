@@ -2,6 +2,7 @@ package com.cs490.onlineshopping.repository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import com.cs490.onlineshopping.model.Category;
 import com.cs490.onlineshopping.model.Product;
 import com.cs490.onlineshopping.model.Vendor;
 
@@ -18,5 +19,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product,Lo
     Page<Product> findByVendor(Vendor vendor, Pageable pageable);    
     
     Page<Product> findByNameContaining(String name, Pageable pageable);
+    
+    List<Product> findByCategory(Category category);
     
 }
