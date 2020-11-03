@@ -90,13 +90,16 @@ public class OnlineShoppingApp implements CommandLineRunner {
 
     userService.saveUserDemo(vendor2);
     
-    Category c1 = new Category("Electronics");
-    Category c2 = new Category("Home");
-    Category c3 = new Category("Kitchen");
+    Category c1 = new Category("General");
+    Category c2 = new Category("Electronics");
+    
+    Category c3 = new Category("Home");
+    Category c4 = new Category("Kitchen");
     
     categoryService.saveCategory(c1);
     categoryService.saveCategory(c2);
     categoryService.saveCategory(c3);
+    categoryService.saveCategory(c4);
     
     Product[] products = new Product[6];
     products[0]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
@@ -110,15 +113,15 @@ public class OnlineShoppingApp implements CommandLineRunner {
     products[2]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
             "Bluetooth technology lets you connect it with compatible devices wirelessly "
             		+ "High-quality AAC audio offers immersive listening experience Built-in "
-            		+ "microphone allows you to take calls while working", vendor, 89.99, 3, c2);
+            		+ "microphone allows you to take calls while working", vendor, 89.99, 3, c3);
     products[3]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
             "Bluetooth technology lets you connect it with compatible devices wirelessly "
             		+ "High-quality AAC audio offers immersive listening experience Built-in "
-            		+ "microphone allows you to take calls while working", vendor2, 89.99, 3, c3);
+            		+ "microphone allows you to take calls while working", vendor2, 89.99, 3, c4);
     products[4]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
             "Bluetooth technology lets you connect it with compatible devices wirelessly "
             		+ "High-quality AAC audio offers immersive listening experience Built-in "
-            		+ "microphone allows you to take calls while working", vendor, 89.99, 3, c3);
+            		+ "microphone allows you to take calls while working", vendor, 89.99, 3, c2);
     products[5]= new Product("Airpods Wireless Bluetooth Headphones","/images/airpods.jpg",
             "Bluetooth technology lets you connect it with compatible devices wirelessly "
             		+ "High-quality AAC audio offers immersive listening experience Built-in "

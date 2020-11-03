@@ -109,7 +109,7 @@ public class Product {
         return category;
     }
 
-    public void setCategory(Category categories) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 }

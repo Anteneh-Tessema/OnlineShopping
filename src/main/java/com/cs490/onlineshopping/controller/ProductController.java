@@ -47,6 +47,8 @@ public class ProductController {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
 	private CategoryService categoryService;
 
 	@GetMapping("/vendors/{vendorid}")
@@ -87,14 +89,15 @@ public class ProductController {
 			return new ResponseEntity<>(new Product(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@GetMapping("/categories/{categoryId}")
-	public ResponseEntity<Page<Product>> getProductByCategory(@PathVariable Integer categoryId, @RequestParam Integer pageNumber, @RequestParam String keyword) {
-		
+	public ResponseEntity<Page<Product>> getProductByCategory(@PathVariable Integer categoryId,
+			@RequestParam Integer pageNumber, @RequestParam String keyword) {
+
 		try {
 			Page<Product> product = productService.findAllByCategory(categoryId, pageNumber - 1, keyword);
 			if (product != null) {
-				
+
 				return new ResponseEntity<>(product, HttpStatus.OK);
 			}
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -108,9 +111,8 @@ public class ProductController {
 	public ResponseEntity<Product> saveProduct(@RequestBody ProductRequest productRequest) {
 		try {
 			Optional<User> vendor = Optional.of(userService.findById(productRequest.getVendor_id()));
-
-			CategoryRequest categoryid = productRequest.getCategoryId();
-			Optional<Category> category = categoryService.findById(categoryid.getId());
+			
+			Optional<Category> category = categoryService.findById(productRequest.getCategoryId());
 			if (!category.isPresent()) {
 				throw new IllegalArgumentException("Category does not exist");
 			}
@@ -139,16 +141,19 @@ public class ProductController {
 	@PostMapping()
 	public ResponseEntity<Product> createProduct(HttpServletRequest req) {
 		try {
+			
 			Optional<User> vendor = Optional.of(userService.whoami(req));
 			if (vendor.isPresent()) {
+				
 				Product product = new Product();
 				product.setCountInStock(0);
 				product.setDescription("Description");
 				product.setImage("Image Path");
 				product.setName("Product Name");
-				product.setPrice(0.00);
+				product.setPrice(0.00);				
 				product.setVendor((Vendor) vendor.get());
-				product.setCategory(new Category());
+				Category c = categoryService.findById(1).get();
+				product.setCategory(c);
 				productService.saveProduct(product);
 				return new ResponseEntity<>(product, HttpStatus.OK);
 			}
@@ -190,8 +195,7 @@ public class ProductController {
 					}
 				}
 
-				CategoryRequest categoryid = productRequest.getCategoryId();
-				Optional<Category> category = categoryService.findById(categoryid.getId());
+				Optional<Category> category = categoryService.findById(productRequest.getCategoryId());
 				if (!category.isPresent()) {
 					throw new IllegalArgumentException("Category does not exist");
 				}
