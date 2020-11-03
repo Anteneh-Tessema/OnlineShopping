@@ -30,6 +30,7 @@ import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,6 +85,21 @@ public class ProductController {
 			return new ResponseEntity<>(new Product(), HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
 			return new ResponseEntity<>(new Product(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/categories/{categoryId}")
+	public ResponseEntity<Page<Product>> getProductByCategory(@PathVariable Integer categoryId, @RequestParam Integer pageNumber, @RequestParam String keyword) {
+		
+		try {
+			Page<Product> product = productService.findAllByCategory(categoryId, pageNumber - 1, keyword);
+			if (product != null) {
+				
+				return new ResponseEntity<>(product, HttpStatus.OK);
+			}
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
