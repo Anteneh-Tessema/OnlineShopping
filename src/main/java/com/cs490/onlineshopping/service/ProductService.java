@@ -30,7 +30,7 @@ public class ProductService {
 	}
 
 	public Page<Product> findAllByPage(Integer pageNumber, String keyword) {
-		Pageable page = PageRequest.of(pageNumber, 2);
+		Pageable page = PageRequest.of(pageNumber, 8);
 		return productRepository.findByNameContaining(keyword, page);
 	}
 
@@ -43,7 +43,7 @@ public class ProductService {
 	}
 
 	public Page<Product> findByVendor(Vendor vendor, Integer pageNumber) {
-		Pageable page = PageRequest.of(pageNumber, 5);
+		Pageable page = PageRequest.of(pageNumber, 8);
 		return productRepository.findByVendor(vendor, page);
 	}
 
@@ -52,7 +52,7 @@ public class ProductService {
 	}
 
 	public Page<Product> findAllByCategory(Integer categoryId, Integer pageNumber, String keyword) {
-		Pageable page = PageRequest.of(pageNumber, 5);
+		Pageable page = PageRequest.of(pageNumber, 8);
 		if(categoryId == 0) return productRepository.findByNameContaining(keyword, page);
 		List<Product> products = productRepository.findByCategory(categoryRepository.findById(categoryId).get())
 				.stream().filter(a -> a.getName().contains(keyword)).collect(Collectors.toList());
