@@ -14,7 +14,7 @@ public class EmailSender {
     public void sendSimpleMessage(String to, String subject, String text)
     {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("noreply@gmail.com");
+        message.setFrom("shoppingapp862@gmail.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
