@@ -34,7 +34,7 @@ public class Order {
     @Column(name = "order_created")
     private OffsetDateTime order_created;
     
-    private double total;
+	private double total;
     private double shippingCost;
     private double tax;
     private double price;

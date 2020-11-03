@@ -16,7 +16,7 @@ import com.cs490.onlineshopping.model.User;
 import com.cs490.onlineshopping.repository.UserRepository;
 
 @Service
-public class MyUserDetails implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Autowired
   private UserRepository userRepository;
@@ -32,7 +32,7 @@ public class MyUserDetails implements UserDetailsService {
     return org.springframework.security.core.userdetails.User//
         .withUsername(username)//
         .password(user.getPassword())//
-        .authorities(user.getRole())//
+        .roles(user.getRole().getAuthority())//
         .accountExpired(false)//
         .accountLocked(false)//
         .credentialsExpired(false)//

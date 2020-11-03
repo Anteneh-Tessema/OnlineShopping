@@ -34,13 +34,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Entry points
     http.authorizeRequests()//
-        .antMatchers("/api/users/signin").permitAll()//
-        .antMatchers("/api/users/signup").permitAll()//
-        .antMatchers("/api/products").permitAll()//.hasAuthority("SHOPPER")////
+        .antMatchers("/api/users/login").permitAll()//
+        .antMatchers("/api/users/register").permitAll()//
+        .antMatchers("/api/products").permitAll()////
         .antMatchers("/api/products/**").permitAll()//
-        .antMatchers("/api/h2-console/**/**").permitAll()
-        .antMatchers("/api/category/**").permitAll()
-        .antMatchers("/generate").permitAll()        
+        .antMatchers("/api/orders").permitAll()//
+        .antMatchers("/api/orders/**").permitAll()//
+        .antMatchers("/orders/**").permitAll()//
+        .antMatchers("/api/uploads").permitAll()//
+        .antMatchers("/api/category").permitAll()//
+        .antMatchers("/api/category/**").permitAll()//
+        .antMatchers("/images").permitAll()
+        .antMatchers("/images/**").permitAll()
+        .antMatchers("/vendor").permitAll()
+        .antMatchers("/vendor/**").permitAll()
+        .antMatchers("/generate").hasRole("ADMIN")        
         // Disallow everything else..
         .anyRequest().authenticated();
 

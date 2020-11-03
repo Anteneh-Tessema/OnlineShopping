@@ -2,53 +2,34 @@ package com.cs490.onlineshopping.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+
 import javax.persistence.Id;
 
 @Entity
 public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private String firstname;
-    private String lastname;
-    private String address;
-    private String state;
-    private String city;
-    private String postalCode;
-    private String country;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-    public Address() {
-        super();
-    }
+	private String address;
 
-    public Address(String firstname, String lastname, String address, String state, String city, String postalCode,
-			String country) {
+	private String city;
+	private String state;
+	private String country;
+	private String postalCode;
+
+	public Address(String address, String city, String state, String country, String postalCode) {
 		super();
-		this.firstname = firstname;
-		this.lastname = lastname;
 		this.address = address;
-		this.state = state;
 		this.city = city;
-		this.postalCode = postalCode;
+		this.state = state;
 		this.country = country;
+		this.postalCode = postalCode;
 	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	
+	public Address() {
+		
 	}
 
 	public String getAddress() {
@@ -59,14 +40,6 @@ public class Address {
 		this.address = address;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
 	public String getCity() {
 		return city;
 	}
@@ -75,12 +48,12 @@ public class Address {
 		this.city = city;
 	}
 
-	public String getPostalCode() {
-		return postalCode;
+	public String getState() {
+		return state;
 	}
 
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public String getCountry() {
@@ -91,15 +64,16 @@ public class Address {
 		this.country = country;
 	}
 
-	public Long getId() {
-		return id;
+	public String getPostalCode() {
+		return postalCode;
 	}
 
-	@Override
-    public String toString() {
-        return "Address [addressId=" + id + ", state=" + state + ", city=" + city + ", postalCode=" + postalCode;
-    }
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
 
-
+	public Long getId() {		
+		return id;
+	}
 
 }

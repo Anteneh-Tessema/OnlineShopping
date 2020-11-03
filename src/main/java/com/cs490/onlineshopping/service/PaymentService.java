@@ -2,30 +2,38 @@ package com.cs490.onlineshopping.service;
 
 import com.cs490.onlineshopping.dto.MakePaymentDTO;
 import com.cs490.onlineshopping.dto.PaymentDTO;
+import com.cs490.onlineshopping.model.Order;
 import com.cs490.onlineshopping.model.Payment;
 import com.cs490.onlineshopping.model.PaymentMethod;
 import com.cs490.onlineshopping.model.PaymentStatus;
 import com.cs490.onlineshopping.model.PaymentType;
-import com.cs490.onlineshopping.repository.PaymentRepo;
+
+import com.cs490.onlineshopping.repository.PaymentRepository;
+
 import com.cs490.onlineshopping.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class PaymentService {
 
     @Autowired
-    PaymentRepo paymentRepo;
+    PaymentRepository paymentRepo;
 
     @Autowired
     CardService cardService;
 
     @Autowired
     UserRepository userRepository;
+    
+    @Autowired
+    OrderService orderService;
 
     public void payForItems(MakePaymentDTO makePaymentDto)
     {
@@ -40,12 +48,14 @@ public class PaymentService {
     {
         cardService.withdrawFromCard(dto.getCardNumber(),dto.getCardExpiryDate(),dto.getSecurityCode(),dto.getPaymentMethod(),dto.getAmount());
         Payment payment = new Payment();
+        payment.setOrder(orderService.findById(dto.getOrderId()).get());
         payment.setAmount(dto.getAmount());
         payment.setPaymentType(PaymentType.PAYMENT_FROM);
         payment.setCardNumber(dto.getCardNumber());
         payment.setStatus(PaymentStatus.SUCCESS);
         payment.setStatusDescription("Transaction finished successfully");
         payment.setTransactionTime(new Date());
+        payment.setPaymentMethod(dto.getPaymentMethod());
         payment.setUser(userRepository.getOne(dto.getCustomerUserId()));
         return paymentRepo.save(payment).getId();
     }
@@ -72,6 +82,15 @@ public class PaymentService {
     {
         return paymentRepo.findByUserId(userRepository.getOne(userId)).stream().map(p -> getDTO(p)).collect(Collectors.toList());
     }
+    
+    public Payment getPayment(Long order_id) {
+    	Optional<Order> order = orderService.findById(order_id);
+    	if(order.isPresent()) {
+    		return paymentRepo.findByOrder(order.get());
+    	}
+    	throw new IllegalArgumentException("Order cannot be found");
+    	
+    }
 
     private PaymentDTO getDTO(Payment payment)
     {
@@ -79,7 +98,7 @@ public class PaymentService {
         dto.setAmount(payment.getAmount());
         dto.setStatus(payment.getStatus());
         dto.setStatusDescription(payment.getStatusDescription());
-        dto.setType(payment.getPaymentType());
+        dto.setMethod(payment.getMethod());
         dto.setUserId(payment.getUser().getId());
         return dto;
     }

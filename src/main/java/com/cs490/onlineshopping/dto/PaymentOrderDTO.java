@@ -1,7 +1,6 @@
 package com.cs490.onlineshopping.dto;
 
 public class PaymentOrderDTO {
-	
 	private String method;
 	private String cardNumber;
 	private String expiryDate;
@@ -16,11 +15,11 @@ public class PaymentOrderDTO {
 	}
 
 	public String getCardNumber() {
-		return cardNumber;
+		return cardNumber.replaceAll("\\s+","");
 	}
 
 	public void setCardNumber(String cardNumber) {
-		this.cardNumber = cardNumber;
+		this.cardNumber = cardNumber.replaceAll("\\s+","");
 	}
 
 	public String getExpiryDate() {

@@ -1,5 +1,6 @@
 package com.cs490.onlineshopping.dto;
 
+import com.cs490.onlineshopping.model.PaymentMethod;
 import com.cs490.onlineshopping.model.PaymentStatus;
 import com.cs490.onlineshopping.model.PaymentType;
 
@@ -10,9 +11,18 @@ public class PaymentDTO {
     private BigDecimal amount;
     private PaymentStatus status;
     private String statusDescription;
-    private PaymentType type;
+    private PaymentMethod method;
+    private String cardNumber;
 
-    public Long getUserId() {
+    public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
+	}
+
+	public Long getUserId() {
         return userId;
     }
 
@@ -44,12 +54,12 @@ public class PaymentDTO {
         this.statusDescription = statusDescription;
     }
 
-    public PaymentType getType() {
-        return type;
+    public PaymentMethod getMethod() {
+        return method;
     }
 
-    public void setType(PaymentType type) {
-        this.type = type;
+    public void setMethod(PaymentMethod method) {
+        this.method = method;
     }
 }
 

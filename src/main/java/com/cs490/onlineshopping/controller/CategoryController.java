@@ -30,7 +30,7 @@ public class CategoryController {
   private CategoryService categoryService;
 
   @GetMapping()
-  public ResponseEntity<List<Category>> getProducts(){
+  public ResponseEntity<List<Category>> getCategory(){
     try {
       return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
     }

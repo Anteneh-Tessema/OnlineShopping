@@ -14,9 +14,9 @@ public class ProductRequest {
     private Long vendor_id;
     private Double price;
     private Integer countInStock;
-    @JsonProperty("isActive")
-    private Boolean isActive;
-    private List<CategoryRequest> categoriesId = new ArrayList<>();
+    @JsonProperty("active")
+    private Boolean active;
+    private CategoryRequest categoryId;
 
     public ProductRequest() {
     }
@@ -78,18 +78,18 @@ public class ProductRequest {
     }
 
     public Boolean getActive() {
-        return isActive;
+        return active;
     }
 
     public void setActive(Boolean active) {
-        isActive = active;
+        this.active = active;
     }
 
-    public List<CategoryRequest> getCategoriesId() {
-        return categoriesId;
+    public CategoryRequest getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoriesId(List<CategoryRequest> categoriesId) {
-        this.categoriesId = categoriesId;
+    public void setCategoryId(CategoryRequest categoryId) {
+        this.categoryId = categoryId;
     }
 }

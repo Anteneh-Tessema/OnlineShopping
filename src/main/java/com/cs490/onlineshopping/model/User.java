@@ -24,6 +24,25 @@ public class User{
     @Enumerated(EnumType.STRING)
     @NotNull
     private Role role;
+    
+    private User(@NotNull String firstname, @NotNull String lastname, @NotNull String username,
+			@NotNull String password, @NotNull String email, @NotNull Role role, Address address) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.address = address;
+	}
+    
+    public User() {
+    	
+    }
+
+	@OneToOne
+    private Address address;
 
     public String getFirstname() {
 		return firstname;

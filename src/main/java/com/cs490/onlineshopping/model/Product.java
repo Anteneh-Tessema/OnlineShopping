@@ -15,20 +15,22 @@ public class Product {
     private String name;
     private String image;
     private String description;
-    @JsonIgnore
+    private Boolean isActive = false;    
+
+	@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "vendor_id", nullable = false)
     private Vendor vendor;
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="product_category", joinColumns={@JoinColumn(referencedColumnName="id")}
-            , inverseJoinColumns={@JoinColumn(referencedColumnName="id")})
-    private Set<Category> categories;
-
+	
+	@ManyToOne
+	@JoinColumn(name="category_id", nullable=false)
+	private Category category;
+	
     private Double price;
     private Integer countInStock;
-    private Boolean isActive = true;
+   
     
-    public Product(String name, String image, String description, Vendor vendor, Double price, Integer countInStock) {
+    public Product(String name, String image, String description, Vendor vendor, Double price, Integer countInStock, Category category) {
 		super();
 		this.name = name;
 		this.image = image;
@@ -36,6 +38,7 @@ public class Product {
 		this.vendor = vendor;
 		this.price = price;
 		this.countInStock = countInStock;
+		this.category = category;
 	}
 
 	public Product() {
@@ -102,11 +105,11 @@ public class Product {
         isActive = active;
     }
 
-    public Set<Category> getCategory() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategory(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category categories) {
+        this.category = category;
     }
 }

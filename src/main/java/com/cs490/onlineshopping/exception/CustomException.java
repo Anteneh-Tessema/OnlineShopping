@@ -2,6 +2,11 @@ package com.cs490.onlineshopping.exception;
 
 import org.springframework.http.HttpStatus;
 
+/**
+ * 
+ * @author Amit Bhattarai
+ *
+ */
 public class CustomException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;

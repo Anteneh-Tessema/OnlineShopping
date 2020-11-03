@@ -40,5 +40,6 @@ public class ItemListDTO {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
 
 }
