@@ -70,7 +70,6 @@ public class ProductController {
 
 	
 	@GetMapping()
-	@Secured({"ROLE_CLIENT", "ROLE_VENDOR", "ROLE_ADMIN"})
 	public ResponseEntity<Page<Product>> getProducts(@RequestParam Integer pageNumber, @RequestParam String keyword) {
 		try {
 			return new ResponseEntity<>(productService.findAllByPage(pageNumber - 1, keyword), HttpStatus.OK);
