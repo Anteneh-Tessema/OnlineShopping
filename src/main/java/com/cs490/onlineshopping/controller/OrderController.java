@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.cs490.onlineshopping.dto.ItemListDTO;
@@ -59,6 +60,7 @@ public class OrderController {
 	private PaymentService paymentService;
 
 	@GetMapping("/myorders")
+	@Secured({"ROLE_CLIENT"})
 	public ResponseEntity<List<OrderDTO>> getAllOrdersByUser(HttpServletRequest req) {
 
 		try {
@@ -93,6 +95,7 @@ public class OrderController {
 	 *
 	 */
 	@GetMapping()
+	@Secured({"ROLE_ADMIN"})
 	public ResponseEntity<List<OrderDTO>> getAllOrders() {
 
 		try {
@@ -127,6 +130,7 @@ public class OrderController {
 	 *
 	 */
 	@GetMapping("/vendors")
+	@Secured({"ROLE_VENDOR"})
 	public ResponseEntity<List<OrderDTO>> getAllOrdersByVendor(HttpServletRequest req) {
 		try {
 			Vendor user = (Vendor) userService.whoami(req);
@@ -145,6 +149,7 @@ public class OrderController {
 	}
 
 	@GetMapping("/{orderid}")
+	@Secured({"ROLE_CLIENT, ROLE_VENDOR, ROLE_ADMIN"})
 	public ResponseEntity<OrderDTO> getOrderById(@PathVariable("orderid") Long orderid) {
 		try {
 			Optional<Order> order = orderService.findById(orderid);
@@ -179,6 +184,7 @@ public class OrderController {
 	}
 
 	@PostMapping()
+	@Secured({"ROLE_CLIENT"})
 	public ResponseEntity<OrderDTO> placeOrder(@RequestBody PlaceOrderDTO cart, HttpServletRequest req) {
 		try {
 			User user = userService.whoami(req);
@@ -225,6 +231,7 @@ public class OrderController {
 
 	// TODO Change status of order
 	@PostMapping("/status")
+	@Secured({"ROLE_ADMIN"})
 	public ResponseEntity<Boolean> changeOrderStatus(@RequestBody OrderStatusDTO ordStatus) {
 		try {
 			Optional<Order> order = orderService.findById(ordStatus.getOrderId());

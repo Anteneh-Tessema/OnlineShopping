@@ -5,6 +5,7 @@ import net.sf.jasperreports.engine.JRException;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class ReportController {
 	ReportService reportService;
 
 	@GetMapping("/products")
+	@Secured({"ROLE_ADMIN"})
 	public String generateReport() throws IOException, FileNotFoundException, JRException {
 			
 		return reportService.productReport("pdf");
@@ -30,6 +32,7 @@ public class ReportController {
 	}
 
 	@GetMapping("/orders")
+	@Secured({"ROLE_ADMIN"})
 	public String ordersReport() throws FileNotFoundException, JRException {
 		return reportService.orderReport("pdf");
 
