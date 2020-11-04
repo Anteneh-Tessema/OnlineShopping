@@ -182,18 +182,26 @@ public class OrderController {
 	public ResponseEntity<OrderDTO> placeOrder(@RequestBody PlaceOrderDTO cart, HttpServletRequest req) {
 		try {
 			User user = userService.whoami(req);
+			System.out.println(cart.getOrderItems().size());
 			if (user.getId() != null) {
 				Order newOrder = orderService.saveOrder(new Order(cart.getShippingAddress(), cart.getBillingAddress(),
 						user, Status.RECEIVED, OffsetDateTime.now(), cart.getTotalPrice(), cart.getShippingPrice(),
 						cart.getTaxPrice(), cart.getItemsPrice()));
+				List<OrderItem> orderItems = new ArrayList<>();
 				for (int i = 0; i < cart.getOrderItems().size(); i++) {
 					ItemListDTO item = cart.getOrderItems().get(i);
+					
 					Optional<Product> product = productService.findById(item.getProductId());
+					System.out.println(item.getPrice());
+					OrderItem orderItem = new OrderItem(newOrder, item.getQuantity(), product.get(), item.getPrice());
 					orderItemService
 							.saveItemOrder(new OrderItem(newOrder, item.getQuantity(), product.get(), item.getPrice()));
 					product.get().setCountInStock(product.get().getCountInStock() - 1);
+					orderItems.add(orderItem);
 					productService.saveProduct(product.get());
 				}
+				newOrder.setOrderItems(orderItems);
+				
 
 				// Payment
 				MakePaymentDTO paymentDTO = new MakePaymentDTO();

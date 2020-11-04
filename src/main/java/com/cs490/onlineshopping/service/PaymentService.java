@@ -8,6 +8,7 @@ import com.cs490.onlineshopping.repository.PaymentRepository;
 
 import com.cs490.onlineshopping.repository.UserRepository;
 
+import com.cs490.onlineshopping.smtp.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,9 @@ public class PaymentService {
     
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    EmailSender emailSender;
 
     public void payForItems(MakePaymentDTO makePaymentDto)
     {
@@ -66,6 +70,9 @@ public class PaymentService {
         {
             emailMessage.append(item.getProduct().getName()+ " "+item.getQuantity()+" unit(s)");
         }
+        String email = userRepository.getOne(dto.getCustomerUserId()).getEmail();
+        String subject = "Reciept for payment of goods";
+        emailSender.sendSimpleMessage(email,subject,emailMessage.toString());
     }
 
     private Long payToVendorAccount(MakePaymentDTO dto)
