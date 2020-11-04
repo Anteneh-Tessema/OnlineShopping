@@ -52,6 +52,7 @@ public class ProductController {
 	private CategoryService categoryService;
 
 	@GetMapping("/vendors/{vendorid}")
+	@Secured({"ROLE_VENDOR"})
 	public ResponseEntity getAllProductsByVendor(@PathVariable("vendorid") Long vendor_id,
 			@RequestParam Integer pageNumber) {
 		try {
@@ -67,7 +68,7 @@ public class ProductController {
 		}
 	}
 
-	// @Secured({"ROLE_CLIENT", "ROLE_VENDOR", "ROLE_ADMIN"})
+	
 	@GetMapping()
 	public ResponseEntity<Page<Product>> getProducts(@RequestParam Integer pageNumber, @RequestParam String keyword) {
 		try {
@@ -77,7 +78,7 @@ public class ProductController {
 		}
 	}
 
-	@GetMapping("/{productid}")
+	@GetMapping("/{productid}")	
 	public ResponseEntity<Product> getProductById(@PathVariable("productid") Long productid) {
 		try {
 			Optional<Product> product = productService.findById(productid);
@@ -105,9 +106,9 @@ public class ProductController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-	@Secured({ "ROLE_VENDOR" })
+	
 	@PostMapping("/save")
+	@Secured({"ROLE_VENDOR", "ROLE_ADMIN"})
 	public ResponseEntity<Product> saveProduct(@RequestBody ProductRequest productRequest) {
 		try {
 			Optional<User> vendor = Optional.of(userService.findById(productRequest.getVendor_id()));
@@ -136,9 +137,9 @@ public class ProductController {
 			return new ResponseEntity<>(new Product(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-	@Secured({ "ROLE_VENDOR" })
+	
 	@PostMapping()
+	@Secured({"ROLE_VENDOR", "ROLE_ADMIN"})
 	public ResponseEntity<Product> createProduct(HttpServletRequest req) {
 		try {
 			
@@ -169,6 +170,7 @@ public class ProductController {
 	 *
 	 */
 	@PutMapping()
+	@Secured({"ROLE_ADMIN"})
 	public ResponseEntity<Product> updateProductAdmin(@RequestBody ProductRequest productRequest,
 			HttpServletRequest req) {
 		try {
@@ -212,6 +214,7 @@ public class ProductController {
 	}
 
 	@DeleteMapping("/{productid}")
+	@Secured({"ROLE_VENDOR", "ROLE_ADMIN"})
 	public ResponseEntity<Boolean> deleteProduct(@PathVariable("productid") Long productid) {
 		try {
 			Optional<Product> productDb = productService.findById(productid);

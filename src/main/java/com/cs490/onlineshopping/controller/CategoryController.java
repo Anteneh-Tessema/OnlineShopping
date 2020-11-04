@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,6 +55,7 @@ public class CategoryController {
   }
 
   @PostMapping("/save")
+  @Secured({"ROLE_VENDOR"})
   public ResponseEntity<Category> saveCategory(@RequestBody Category category) {
     try {
       if(category.getName() != null) {
@@ -68,6 +70,7 @@ public class CategoryController {
   }
 
   @PutMapping("/update")
+  @Secured({"ROLE_ADMIN"})
   public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
     try {
       Optional<Category> ca = categoryService.findById(category.getId());
@@ -84,6 +87,7 @@ public class CategoryController {
   }
 
   @DeleteMapping("/delete/{categoryid}")
+  @Secured({"ROLE_ADMIN"})
   public ResponseEntity<Boolean> deleteCategory(@PathVariable("categoryid") Integer categoryid) {
     try {
       Optional<Category> categoryDb = categoryService.findById(categoryid);

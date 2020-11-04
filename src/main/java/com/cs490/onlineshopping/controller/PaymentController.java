@@ -4,6 +4,7 @@ import com.cs490.onlineshopping.dto.MakePaymentDTO;
 import com.cs490.onlineshopping.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ public class PaymentController {
     PaymentService paymentService;
 
     @PostMapping("")
+    @Secured({"ROLE_CLIENT"})
     public ResponseEntity makePayment(MakePaymentDTO dto)
     {
         paymentService.payForItems(dto);
