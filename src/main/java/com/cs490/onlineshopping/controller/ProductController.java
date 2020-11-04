@@ -78,8 +78,7 @@ public class ProductController {
 		}
 	}
 
-	@GetMapping("/{productid}")
-	@Secured({"ROLE_CLIENT", "ROLE_VENDOR", "ROLE_ADMIN"})
+	@GetMapping("/{productid}")	
 	public ResponseEntity<Product> getProductById(@PathVariable("productid") Long productid) {
 		try {
 			Optional<Product> product = productService.findById(productid);
@@ -93,7 +92,6 @@ public class ProductController {
 	}
 
 	@GetMapping("/categories/{categoryId}")
-	@Secured({"ROLE_CLIENT", "ROLE_VENDOR", "ROLE_ADMIN"})
 	public ResponseEntity<Page<Product>> getProductByCategory(@PathVariable Integer categoryId,
 			@RequestParam Integer pageNumber, @RequestParam String keyword) {
 
