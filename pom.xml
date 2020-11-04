@@ -21,7 +21,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.2.RELEASE</version>
-		
+
 	</parent>
 
 	<dependencies>
@@ -61,12 +61,9 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<!-- Automatically restart whenever files on the classpath change -->
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency>
+		<!-- <dependency> Automatically restart whenever files on the classpath 
+			change <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-devtools</artifactId> 
+			<optional>true</optional> </dependency> -->
 		<dependency>
 			<!-- Use MySQL Connector-J -->
 			<groupId>mysql</groupId>
@@ -76,7 +73,11 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -115,14 +116,14 @@
 	</dependencies>
 
 	<build>
-		
-			<plugins>
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-				</plugin>
-			</plugins>
-		
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+
 	</build>
 
 </project>
