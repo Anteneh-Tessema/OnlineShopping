@@ -16,8 +16,7 @@ public class PaymentController {
     @Autowired
     PaymentService paymentService;
 
-    @PostMapping("")
-    @Secured({"ROLE_CLIENT"})
+    @PostMapping("")    
     public ResponseEntity makePayment(MakePaymentDTO dto)
     {
         paymentService.payForItems(dto);

@@ -54,8 +54,7 @@ public class CategoryController {
     }
   }
 
-  @PostMapping("/save")
-  @Secured({"ROLE_VENDOR"})
+  @PostMapping("/save")  
   public ResponseEntity<Category> saveCategory(@RequestBody Category category) {
     try {
       if(category.getName() != null) {
@@ -69,8 +68,7 @@ public class CategoryController {
     }
   }
 
-  @PutMapping("/update")
-  @Secured({"ROLE_ADMIN"})
+  @PutMapping("/update")  
   public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
     try {
       Optional<Category> ca = categoryService.findById(category.getId());
@@ -86,8 +84,7 @@ public class CategoryController {
     }
   }
 
-  @DeleteMapping("/delete/{categoryid}")
-  @Secured({"ROLE_ADMIN"})
+  @DeleteMapping("/delete/{categoryid}") 
   public ResponseEntity<Boolean> deleteCategory(@PathVariable("categoryid") Integer categoryid) {
     try {
       Optional<Category> categoryDb = categoryService.findById(categoryid);

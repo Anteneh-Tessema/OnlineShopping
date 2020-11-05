@@ -39,6 +39,7 @@ public class UserService {
 
   public String signin(String username, String password) {
     try {
+    	
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
       String token =  jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRole());
       

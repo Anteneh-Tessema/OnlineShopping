@@ -20,14 +20,12 @@ public class FileUploadController {
 	    @Autowired
 	    FileService fileService;
 
-	    @GetMapping()
-	    @Secured({"ROLE_VENDOR, ROLE_ADMIN"})
+	    @GetMapping()	    
 	    public String index() {
 	        return "upload";
 	    }
 
-	    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	    @Secured({"ROLE_VENDOR, ROLE_ADMIN"})
+	    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)	    
 	    public String uploadFile(@RequestParam MultipartFile file, RedirectAttributes redirectAttributes) {
 	    	
 	        String filePath = fileService.uploadFile(file);

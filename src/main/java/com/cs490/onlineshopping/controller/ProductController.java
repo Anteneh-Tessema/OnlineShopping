@@ -32,8 +32,7 @@ public class ProductController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@GetMapping("/vendors/{vendorid}")
-	@Secured({"ROLE_VENDOR"})
+	@GetMapping("/vendors/{vendorid}")	
 	public ResponseEntity getAllProductsByVendor(@PathVariable("vendorid") Long vendor_id,
 			@RequestParam Integer pageNumber) {
 		try {
@@ -88,8 +87,7 @@ public class ProductController {
 		}
 	}
 	
-	@PostMapping("/save")
-	@Secured({"ROLE_VENDOR", "ROLE_ADMIN"})
+	@PostMapping("/save")	
 	public ResponseEntity<Product> saveProduct(@RequestBody ProductRequest productRequest) {
 		try {
 			Optional<User> vendor = Optional.of(userService.findById(productRequest.getVendor_id()));
@@ -119,8 +117,7 @@ public class ProductController {
 		}
 	}
 	
-	@PostMapping()
-	@Secured({"ROLE_VENDOR", "ROLE_ADMIN"})
+	@PostMapping()	
 	public ResponseEntity<Product> createProduct(HttpServletRequest req) {
 		try {
 			
@@ -150,8 +147,7 @@ public class ProductController {
 	 * @author Amit Bhattarai
 	 *
 	 */
-	@PutMapping()
-	@Secured({"ROLE_ADMIN"})
+	@PutMapping()	
 	public ResponseEntity<Product> updateProductAdmin(@RequestBody ProductRequest productRequest,
 			HttpServletRequest req) {
 		try {
@@ -194,8 +190,7 @@ public class ProductController {
 		}
 	}
 
-	@DeleteMapping("/{productid}")
-	@Secured({"ROLE_VENDOR", "ROLE_ADMIN"})
+	@DeleteMapping("/{productid}")	
 	public ResponseEntity<Boolean> deleteProduct(@PathVariable("productid") Long productid) {
 		try {
 			Optional<Product> productDb = productService.findById(productid);

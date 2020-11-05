@@ -50,9 +50,8 @@ public class UserController {
   private UserService userService;
 
   @Autowired
-  private ModelMapper modelMapper;
-  
-  @Secured("ROLE_ADMIN")
+  private ModelMapper modelMapper;  
+
   @GetMapping()
   @ApiOperation(value = "${UserController.getUsers}")
   @ApiResponses(value = {//
@@ -109,8 +108,7 @@ public class UserController {
   }
 
 
-  @DeleteMapping(value = "/{userId}")
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @DeleteMapping(value = "/{userId}") 
   @ApiOperation(value = "${UserController.delete}")
   @ApiResponses(value = {//
       @ApiResponse(code = 400, message = "Something went wrong"), //
@@ -143,8 +141,6 @@ public class UserController {
     
   }
   @GetMapping(value = "username/{username}")
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
-  @ApiOperation(value = "${UserController.search}", response = UserResponseDTO.class)
   @ApiResponses(value = {//
           @ApiResponse(code = 400, message = "Something went wrong"), //
           @ApiResponse(code = 403, message = "Access denied"), //
@@ -154,9 +150,7 @@ public class UserController {
     return modelMapper.map(userService.search(username), UserResponseDTO.class);
   }
 
-  @GetMapping(value = "/me")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT') or hasRole('ROLE_VENDOR')")
-  @ApiOperation(value = "${UserController.me}", response = UserResponseDTO.class, authorizations = { @Authorization(value="apiKey") })
+  @GetMapping(value = "/me")  
   @ApiResponses(value = {//
           @ApiResponse(code = 400, message = "Something went wrong"), //
           @ApiResponse(code = 403, message = "Access denied"), //
@@ -165,8 +159,7 @@ public class UserController {
     return modelMapper.map(userService.whoami(req), UserResponseDTO.class);
   }
 
-  @GetMapping("/refresh")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
+  @GetMapping("/refresh") 
   public String refresh(HttpServletRequest req) {
     return userService.refresh(req.getRemoteUser());
   }
