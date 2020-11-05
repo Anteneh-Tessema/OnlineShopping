@@ -1,39 +1,20 @@
 package com.cs490.onlineshopping.controller;
 
-import com.cs490.onlineshopping.api.request.CategoryRequest;
 import com.cs490.onlineshopping.api.request.ProductRequest;
-import com.cs490.onlineshopping.dto.UserResponseDTO;
-
-import org.modelmapper.ModelMapper;
-import com.cs490.onlineshopping.model.Category;
+import com.cs490.onlineshopping.model.*;
 import com.cs490.onlineshopping.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import com.cs490.onlineshopping.model.Product;
-import com.cs490.onlineshopping.model.Role;
-import com.cs490.onlineshopping.model.User;
-import com.cs490.onlineshopping.model.Vendor;
 import com.cs490.onlineshopping.service.ProductService;
 import com.cs490.onlineshopping.service.UserService;
-
-import java.net.http.HttpRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.*;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
