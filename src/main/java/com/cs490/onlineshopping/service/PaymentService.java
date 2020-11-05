@@ -68,7 +68,7 @@ public class PaymentService {
         emailMessage.append("We have received payment of "+dto.getAmount()+" for the following items");
         for(OrderItem item : order.getOrderItems())
         {
-            emailMessage.append(item.getProduct().getName()+ " "+item.getQuantity()+" unit(s)");
+            emailMessage.append(item.getProduct().getName()+ " "+item.getQuantity()+" unit(s) \n");
         }
         String email = userRepository.getOne(dto.getCustomerUserId()).getEmail();
         String subject = "Reciept for payment of goods";
