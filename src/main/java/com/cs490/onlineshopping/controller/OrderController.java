@@ -59,8 +59,7 @@ public class OrderController {
 	@Autowired
 	private PaymentService paymentService;
 
-	@GetMapping("/myorders")
-	@Secured({"ROLE_CLIENT"})
+	@GetMapping("/myorders")	
 	public ResponseEntity<List<OrderDTO>> getAllOrdersByUser(HttpServletRequest req) {
 
 		try {
@@ -94,8 +93,7 @@ public class OrderController {
 	 * @author Amit Bhattarai
 	 *
 	 */
-	@GetMapping()
-	@Secured({"ROLE_ADMIN"})
+	@GetMapping()	
 	public ResponseEntity<List<OrderDTO>> getAllOrders() {
 
 		try {
@@ -129,8 +127,7 @@ public class OrderController {
 	 * @author Amit Bhattarai
 	 *
 	 */
-	@GetMapping("/vendors")
-	@Secured({"ROLE_VENDOR"})
+	@GetMapping("/vendors")	
 	public ResponseEntity<List<OrderDTO>> getAllOrdersByVendor(HttpServletRequest req) {
 		try {
 			Vendor user = (Vendor) userService.whoami(req);
@@ -148,8 +145,7 @@ public class OrderController {
 		}
 	}
 
-	@GetMapping("/{orderid}")
-	@Secured({"ROLE_CLIENT, ROLE_VENDOR, ROLE_ADMIN"})
+	@GetMapping("/{orderid}")	
 	public ResponseEntity<OrderDTO> getOrderById(@PathVariable("orderid") Long orderid) {
 		try {
 			Optional<Order> order = orderService.findById(orderid);
@@ -184,7 +180,6 @@ public class OrderController {
 	}
 
 	@PostMapping()
-	@Secured({"ROLE_CLIENT"})
 	public ResponseEntity<OrderDTO> placeOrder(@RequestBody PlaceOrderDTO cart, HttpServletRequest req) {
 		try {
 			User user = userService.whoami(req);
@@ -230,8 +225,7 @@ public class OrderController {
 	}
 
 	// TODO Change status of order
-	@PostMapping("/status")
-	@Secured({"ROLE_ADMIN"})
+	@PostMapping("/status")	
 	public ResponseEntity<Boolean> changeOrderStatus(@RequestBody OrderStatusDTO ordStatus) {
 		try {
 			Optional<Order> order = orderService.findById(ordStatus.getOrderId());
