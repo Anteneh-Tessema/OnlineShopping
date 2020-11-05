@@ -24,46 +24,48 @@ import static org.springframework.http.MediaType.APPLICATION_PDF;
 @RequestMapping("/api/reports")
 public class ReportController {
 
-    @Autowired
-    private ReportService reportingService;
+	@Autowired
+	private ReportService reportingService;
 
-    @GetMapping(value = "/products", produces = "application/pdf")
-    public ResponseEntity<InputStreamResource> listOfProduct() throws IOException {
-        final File productPdf = reportingService.generateProductReport();
-        final HttpHeaders httpHeaders = getHttpHeaders(productPdf, "List Of Product");
-        return new ResponseEntity<>(new InputStreamResource(new FileInputStream(productPdf)), httpHeaders, OK);
-    }
+	@GetMapping(value = "/products", produces = "application/pdf")
+	public ResponseEntity<InputStreamResource> listOfProduct() throws IOException {
+		final File productPdf = reportingService.generateProductReport();
+		final HttpHeaders httpHeaders = getHttpHeaders(productPdf, "List Of Product");
+		return new ResponseEntity<>(new InputStreamResource(new FileInputStream(productPdf)), httpHeaders, OK);
+	}
 
-    @GetMapping(value = {"/price", "/price/{vendorId}"}, produces = "application/pdf")
-    public ResponseEntity<InputStreamResource> statusByPrice(@PathVariable(required = false) Long vendorId) throws IOException {
-         File productPdf;
-        if(vendorId == null)
-            productPdf = reportingService.generatePriceReport();
-        else
-            productPdf = reportingService.generatePriceByVendorReport(vendorId);
+	@GetMapping(value = { "/price", "/price/{vendorId}" }, produces = "application/pdf")
+	public ResponseEntity<InputStreamResource> statusByPrice(@PathVariable(required = false) Long vendorId)
+			throws IOException {
+		File productPdf;
+		if (vendorId == null)
+			productPdf = reportingService.generatePriceReport();
+		else
+			productPdf = reportingService.generatePriceByVendorReport(vendorId);
 
-        final HttpHeaders httpHeaders = getHttpHeaders(productPdf, "Status Of Sale By Price");
-        return new ResponseEntity<>(new InputStreamResource(new FileInputStream(productPdf)), httpHeaders, OK);
-    }
+		final HttpHeaders httpHeaders = getHttpHeaders(productPdf, "Status Of Sale By Price");
+		return new ResponseEntity<>(new InputStreamResource(new FileInputStream(productPdf)), httpHeaders, OK);
+	}
 
-    @GetMapping(value = {"/product", "/product/{vendorId}"}, produces = "application/pdf")
-    public ResponseEntity<InputStreamResource> statusByProduct(@PathVariable(required = false) Long vendorId) throws IOException {
-         File productPdf;
-        if(vendorId == null)
-            productPdf = reportingService.generateProductsReport();
-        else
-            productPdf = reportingService.generateProductsByVendorReport(vendorId);
+	@GetMapping(value = { "/product", "/product/{vendorId}" }, produces = "application/pdf")
+	public ResponseEntity<InputStreamResource> statusByProduct(@PathVariable(required = false) Long vendorId)
+			throws IOException {
+		File productPdf;
+		if (vendorId == null)
+			productPdf = reportingService.generateProductsReport();
+		else
+			productPdf = reportingService.generateProductsByVendorReport(vendorId);
 
-        final HttpHeaders httpHeaders = getHttpHeaders(productPdf, "Status Of Sale By Product");
-        return new ResponseEntity<>(new InputStreamResource(new FileInputStream(productPdf)), httpHeaders, OK);
-    }
+		final HttpHeaders httpHeaders = getHttpHeaders(productPdf, "Status Of Sale By Product");
+		return new ResponseEntity<>(new InputStreamResource(new FileInputStream(productPdf)), httpHeaders, OK);
+	}
 
-    private HttpHeaders getHttpHeaders(File productPdf, String title) {
-        HttpHeaders respHeaders = new HttpHeaders();
-        respHeaders.setContentType(APPLICATION_PDF);
-        respHeaders.setContentLength(productPdf.length());
-        respHeaders.setContentDispositionFormData("attachment", format("%s-%s.pdf", title, "Report"));
-        return respHeaders;
-    }
+	private HttpHeaders getHttpHeaders(File productPdf, String title) {
+		HttpHeaders respHeaders = new HttpHeaders();
+		respHeaders.setContentType(APPLICATION_PDF);
+		respHeaders.setContentLength(productPdf.length());
+		respHeaders.setContentDispositionFormData("attachment", format("%s-%s.pdf", title, "Report"));
+		return respHeaders;
+	}
 
 }
