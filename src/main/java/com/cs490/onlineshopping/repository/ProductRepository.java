@@ -21,5 +21,8 @@ public interface ProductRepository extends PagingAndSortingRepository<Product,Lo
     Page<Product> findByNameContaining(String name, Pageable pageable);
     
     List<Product> findByCategory(Category category);
+
+    @Query("SELECT p FROM Product p where p.vendor.id = ?1")
+    List<Product> findByVendorId(Long vendorId);
     
 }
