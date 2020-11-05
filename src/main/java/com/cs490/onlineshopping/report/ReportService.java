@@ -89,7 +89,7 @@ public class ReportService {
         List<Product> result = productRepository.findByVendorId(vendorId);
         List<ReportDTO> res = new ArrayList<>();
         for(Product p: result) {
-            String price_earned = checkOrderItem(p.getId(), "price");
+            String price_earned = "$" + checkOrderItem(p.getId(), "price");
             ObjectMapper objectMapper2 = new ObjectMapper();
             objectMapper2.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             String product = objectMapper2.writeValueAsString(p);
@@ -115,6 +115,7 @@ public class ReportService {
             List<ReportDTO> res = new ArrayList<>();
             for(Product p: result) {
                 String sold_No = checkOrderItem(p.getId(), "product");
+                sold_No = sold_No.substring(0, sold_No.indexOf('.'));
                 ObjectMapper objectMapper2 = new ObjectMapper();
                 objectMapper2.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
                 String product = objectMapper2.writeValueAsString(p);
@@ -137,6 +138,7 @@ public class ReportService {
         List<ReportDTO> res = new ArrayList<>();
         for(Product p: result) {
             String sold_No = checkOrderItem(p.getId(), "product");
+            sold_No = sold_No.substring(0, sold_No.indexOf('.'));
             ObjectMapper objectMapper2 = new ObjectMapper();
             objectMapper2.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             String product = objectMapper2.writeValueAsString(p);
