@@ -8,6 +8,8 @@ public class ReportDTO {
 	private String countInStock;
 	private String price;
 	private String image;
+	private String price_earned;
+    private String sold_No;
 	
 	public String getImage() {
 		return image;
@@ -30,6 +32,11 @@ public class ReportDTO {
 	public String getDescription() {
 		return description;
 	}
+	public String getPrice_earned() {return price_earned;	}
+	public void setPrice_earned(String price_earned) {this.price_earned = price_earned;	}
+	public String getSold_No() {return sold_No;	}
+	public void setSold_No(String sold_No) {this.sold_No = sold_No;	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}

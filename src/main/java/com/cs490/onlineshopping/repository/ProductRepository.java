@@ -22,4 +22,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product,Lo
     
     List<Product> findByCategory(Category category);
     
+    @Query("SELECT p FROM Product p where p.vendor.id = ?1")
+    List<Product> findByVendorId(Long vendorId);
+    
 }
